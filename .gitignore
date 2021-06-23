@@ -1,0 +1,6 @@
+/certificates/
+/logs/
+/logs/api.log
+/logs/ipnLog.log
+/logs/realtimeLog.log
+/vendor/

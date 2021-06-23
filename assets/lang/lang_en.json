@@ -1,0 +1,12 @@
+{
+	"payment_api_with_card": "Payment API with card",
+	"checkout_title": "Below is a PHP example to make paymets using NETOPIA Payments API.",
+	"tabs": {
+		"MakePayment"	: "Make Payment",
+		"PaymentStatus" : "Payment Status",
+		"ExpirePayment" : "Expire Payment",
+		"ConfirmURL"	: "Confirm URL",
+		"ReturnURL"	 	: "Return URL",
+		"APIDocument"	: "API Document"
+	}
+}

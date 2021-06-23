@@ -1,0 +1,12 @@
+{
+    "require": {
+        "firebase/php-jwt": "^5.2",
+        "vlucas/phpdotenv": "^2.4",
+        "league/commonmark": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    }
+}
