@@ -1,7 +1,6 @@
 <?php 
 include_once('lib/start.php');
 include_once('lib/bank.php');
-include_once('lib/log.php');
 
 class request extends start{
     public $authenticationToken;
@@ -18,7 +17,6 @@ class request extends start{
             'redirectUrl'   => $this->redirectUrl,
             'language'      => $_POST['language']
         );
-
         return $config;
     }
 
@@ -38,7 +36,6 @@ class request extends start{
             ],
             'data' => null
         );
-
         return $payment;
     }
 
@@ -83,7 +80,6 @@ class request extends start{
                             ),
             'payload'       => null
         );
-
         return $order;
     }
 
@@ -117,18 +113,10 @@ class request extends start{
       
       // make json Data 
       return json_encode($startArr);
-    } 
+    }
 
     public function startPayment(){
       $result = $this->sendRequest($this->jsonRequest);
-      return($result);       
-
-      die('TmpDie');
-      
-      
-    }
-
-
-
-    
+      return($result);
+    }    
 }

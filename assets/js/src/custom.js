@@ -68,7 +68,9 @@ $(function () {
              */
             var backUrl = window.location.origin + "/demoV2/backAuth.php"; 
             doRedirectSandboxAuthorize(response.data.customerAction.formData.paReq, backUrl);            
-          }else {
+          } else if(response.data.error.code == 56) {
+            $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
+          } else {
             $('#authenticationToken').val(response.data.customerAction.authenticationToken);
             $('#conclusionMsg').append('<li>Your card dosn\'t have 3DS!!!</li>');
           }

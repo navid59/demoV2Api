@@ -24,7 +24,7 @@ $dotenv->load();
  * redirect to 404 - TEMPORARY
  * */ 
 if(count($_SESSION) == 0 || !isset($_SESSION)) {
-    $url = 'http://35.204.43.65/demo/404.php';
+    $url = 'http://35.204.43.65/demoV2/404.php';
     header("Location: $url");
     exit;
 }

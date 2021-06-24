@@ -69,8 +69,25 @@ if($resultObj->status){
              * There is another order with a different price
              */
         break;
+        case 19:
+            // Expire Card Error
+        break;
+        case 20:
+            // Founduri Error
+        break;
+        case 21:
+            // CVV Error
+        break;
+        case 22:
+            // CVV Error
+        break;
+        case 34:
+            // Card Tranzactie nepermisa Error
+        break;
         case 0:
-            log::setLog("Card has no 3DS");
+            /**
+             * Card has no 3DS
+             */
         break;
         default:
             log::setLog($resultObj->data->error->code ." -> ".$resultObj->data->error->message);
