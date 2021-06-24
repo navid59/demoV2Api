@@ -9,11 +9,13 @@ class log {
             case 100:
                 self::setBackendLog($log);
                 self::setRealTimeLog($arrLog);
+            break;
             case 200:
             case 400:
             case 404:
             case "xx":
                 self::setRealTimeLog($arrLog);
+            break;
             default:
                 self::setBackendLog($log);
         }
@@ -40,7 +42,7 @@ class log {
         var_dump( $log );               // dump the values
         $contents = ob_get_contents();  // put the buffer into a variable
         ob_end_clean();
-           file_put_contents('/var/www/html/demo/logs/api.log', $contents , FILE_APPEND | LOCK_EX);
+           file_put_contents('logs/api.log', $contents , FILE_APPEND | LOCK_EX);
     }
 
     static function setRealTimeLog($arrLog) {
@@ -59,7 +61,7 @@ class log {
         echo $logPoint;
         $contents = ob_get_contents();  // put the buffer into a variable
         ob_end_clean();
-           file_put_contents('/var/www/html/demo/logs/realtimeLog.log', $contents , FILE_APPEND | LOCK_EX);
+           file_put_contents('logs/realtimeLog.log', $contents , FILE_APPEND | LOCK_EX);
     }
 
     static function setIpnLog($log) {
@@ -72,6 +74,6 @@ class log {
         var_dump( $log );               // dump the values
         $contents = ob_get_contents();  // put the buffer into a variable
         ob_end_clean();
-           file_put_contents('/var/www/html/demo/logs/ipnLog.log', $contents , FILE_APPEND | LOCK_EX);
+           file_put_contents('logs/ipnLog.log', $contents , FILE_APPEND | LOCK_EX);
     }
 }

@@ -5,35 +5,35 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include_once __DIR__ . '/vendor/autoload.php';
-include_once('lib/request.php');
+include_once('lib/log.php');
 
-$netopia = new request();
+// $netopia = new request();
 
 // FOR START Action - Start
-$netopia->notifyUrl    = 'http://35.204.43.65/demo/ipn.php';
-$netopia->redirectUrl  = 'http://35.204.43.65/demo/return.php';
-$netopia->apiKey       = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
+// $netopia->notifyUrl    = 'http://35.204.43.65/demo/ipn.php';
+// $netopia->redirectUrl  = 'http://35.204.43.65/demo/return.php';
+// $netopia->apiKey       = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
 
-$netopia->posSignature = 'LXTP-3WDM-WVXL-GC8B-Y5DA'; // START & IPN
+// $netopia->posSignature = 'LXTP-3WDM-WVXL-GC8B-Y5DA'; // START & IPN
 // FOR START Action - END
 
 // ONLY IPN - START
-$netopia->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA';
-$netopia->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA_fake1'; 
-$netopia->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA_fake2'; 
-$netopia->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA_fake3';
+// $netopia->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA';
+// $netopia->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA_fake1'; 
+// $netopia->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA_fake2'; 
+// $netopia->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA_fake3';
 
-$netopia->isLive = false;
-$netopia->hashMethod = 'SHA512';
-$netopia->alg = 'RS512';
+// $netopia->isLive = false;
+// $netopia->hashMethod = 'SHA512';
+// $netopia->alg = 'RS512';
 
-$netopia->publicKeyStr = '';
+// $netopia->publicKeyStr = '';
 
 // ONLY IPN - END
 
-$netopia->setSetting();
+// $netopia->setSetting();
 
-$_SESSION['apiKey']    = $netopia->apiKey; // WHy is in Session,
+// $_SESSION['apiKey']    = $netopia->apiKey; // WHy is in Session,
 
 /**
  * Load .env 
@@ -41,6 +41,8 @@ $_SESSION['apiKey']    = $netopia->apiKey; // WHy is in Session,
  */
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
+
+log::setRealTimeLog(array('CheckoutPage' => getenv('LOG_TXT_CHECKOUT') ? getenv('LOG_TXT_CHECKOUT') : 'Checkout is hitting' ));
 ?>
 <!doctype html>
 <html lang="en">

@@ -7,7 +7,7 @@ $prices = array_column($products, 'pPrice');
 ?>
 <div class="row" style="padding-top:15px;">
   <div class="col-md-4 order-md-2 mb-4">
-    <form id="checkoutForm" class="needs-validation" novalidate>
+    <form id="checkoutForm" class="needs-validation" method="POST">
     <h4 class="d-flex justify-content-between align-items-center mb-3">
       <span class="text-muted">Product Info</span>
       <span class="badge badge-secondary badge-pill">&nbsp;</span>
@@ -51,62 +51,6 @@ $prices = array_column($products, 'pPrice');
   <div class="col-md-8 order-md-1">
       <h4 class="mb-3">Config Information</h4>
       <p>The disabled fields are just to give some more information as demo version for developers</p>
-      <div class="mb-3">
-          <label for="apiKey">API KEY</label>
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text">API Key</span>
-              </div>
-              <input type="text" class="form-control" id="apiKey" name="apiKey" placeholder="String - Length(0-255)" value="<?=$netopia->apiKey;?>" required disabled>
-              <div class="invalid-feedback" style="width: 100%;">
-                  API Key is required.
-              </div>
-          </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="ntpID">NETOPIA Payments ID (ntpID)</label>
-          <input type="text" class="form-control" id="ntpID" name="ntpID" placeholder="String - Length(1-64)" value="" required disabled>
-          <div class="invalid-feedback">
-            Valid ntpID is required.
-          </div>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="posSignature">pos Signature</label>
-          <input type="text" class="form-control" id="posSignature" name="posSignature" placeholder="" value="<?=$netopia->posSignature;?>" required>
-          <div class="invalid-feedback">
-            Valid posSignature is required.
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-          <label for="authenticationToken">Authentication Token</label>
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text">Auth Token</span>
-              </div>
-              <input type="text" class="form-control" id="authenticationToken" name="authenticationToken" placeholder="String - Length(0-255)" required disabled>
-              <div class="invalid-feedback" style="width: 100%;">
-                  Your authentication Token is required.
-              </div>
-          </div>
-      </div>
-
-
-      <div class="mb-3">
-          <label for="paReq">Token paReq</label>
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text">Req Token</span>
-              </div>
-              <input type="text" class="form-control" id="paReq" name="paReq" placeholder="String - Length(0-255)" required disabled>
-              <div class="invalid-feedback" style="width: 100%;">
-                  Token is required.
-              </div>
-          </div>
-      </div>
 
       <hr class="mb-4">
 
@@ -116,24 +60,11 @@ $prices = array_column($products, 'pPrice');
               <div class="input-group-prepend">
                   <span class="input-group-text">#</span>
               </div>
-              <input type="text" class="form-control" id="orderID" name="orderID" placeholder="" required value="<?=str_shuffle('RandomizeString1234567890')."_".rand(0,10000)?>">
+              <input type="text" class="form-control" id="orderID" name="orderID" placeholder="" value="<?=str_shuffle('RandomizeString1234567890')."_".rand(0,10000)?>" required>
               <div class="invalid-feedback" style="width: 100%;">
                   The order ID is required.
               </div>
           </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="notifyUrl">notify Url (IPN)</label>
-        <input type="text" class="form-control" id="notifyUrl" name="notifyUrl" value="<?=$netopia->notifyUrl;?>" placeholder="Enter IPN URL" required>
-        <div class="invalid-feedback">
-          Please enter your notify Url.
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="redirectUrl">redirect Url<span class="text-muted"></span></label>
-        <input type="text" class="form-control" id="redirectUrl" name="redirectUrl"  value="<?=$netopia->redirectUrl;?>" placeholder="Enter Confirm URL">
       </div>
 
       <div class="row">
@@ -165,8 +96,8 @@ $prices = array_column($products, 'pPrice');
           <label for="language">Language</label>
           <select class="custom-select d-block w-100" id="language" name="language" required>
             <option value="">Choose...</option>
-            <option value="ro" selected>Romanian</option>
-            <option value="en">English</option>
+            <option value="RO" selected>Romanian</option>
+            <option value="EN">English</option>
           </select>
           <div class="invalid-feedback">
             Please provide a valid state.
@@ -408,7 +339,7 @@ $prices = array_column($products, 'pPrice');
         </div>
       </div>
       <hr class="mb-4">
-      <button class="btn btn-primary btn-lg btn-block" id="doPayment" type="submit">Continue to checkout</button>
+      <input class="btn btn-primary btn-lg btn-block" id="doPayment" type="submit" value="Continue to checkout">
     </form>
     <hr class="mb-4">
     <div id="message" style="display: none">

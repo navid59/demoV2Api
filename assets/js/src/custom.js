@@ -33,7 +33,7 @@ $(document).ready(() => {
 
 $(function () {
   $('#checkoutForm').on('submit', function (e) {
-    $('form')[0].reset(); // to Clean values by duble click
+    // $('form')[0].reset(); // to Clean values by duble click
   e.preventDefault();
   $.ajax({
       type: 'post',
@@ -66,7 +66,7 @@ $(function () {
              * Step 2) Sandbox/Auton
              * preparing for redirect
              */
-            var backUrl = window.location.origin + "/demo/backAuth.php"; 
+            var backUrl = window.location.origin + "/demoV2/backAuth.php"; 
             doRedirectSandboxAuthorize(response.data.customerAction.formData.paReq, backUrl);            
           }else {
             $('#authenticationToken').val(response.data.customerAction.authenticationToken);
@@ -82,7 +82,9 @@ $(function () {
           $('#msg-warning-title').html(response.message);
           $('#warning-status-msg').html('Your request is failed');
           $('#warning-type-code').html('the type of your error is :'+response.code);
-          $('#warning-full-msg').html(response.data.message);
+          if (response.data !== undefined) {
+            $('#warning-full-msg').html(response.data.message);
+          }
           $('#message-warning').show();
         }
       },
@@ -107,7 +109,7 @@ function doRedirectSandboxAuthorize(paReq, backUrl) {
 // Display Logs Real Time
 function getLog() {
   $.ajax({
-      url: window.location.origin + '/demo/logs/realtimeLog.log',
+      url: window.location.origin + '/demoV2/logs/realtimeLog.log',
       dataType: 'text',
       success: function(text) {
           $("#containerDiv").html(text);
@@ -119,7 +121,7 @@ function getLog() {
 // Display IPN Logs Real Time
 function getIpnLog() {
   $.ajax({
-      url: window.location.origin + '/demo/logs/ipnLog.log',
+      url: window.location.origin + '/demoV2/logs/ipnLog.log',
       dataType: 'text',
       success: function(text) {
           $("#containerDivIpnLog").html(text);
@@ -131,7 +133,7 @@ function getIpnLog() {
 // Display Success page Logs Real Time
 function getReturnLog() {
   $.ajax({
-      url: window.location.origin + '/demo/logs/returnLog.log',
+      url: window.location.origin + '/demoV2/logs/returnLog.log',
       dataType: 'text',
       success: function(text) {
           $("#containerDivReturnLog").html(text);
@@ -145,7 +147,7 @@ function cleanLogFile(logType) {
   // alert("Log Type : "+logType);
   $.ajax({
     type: 'post',
-    url: window.location.origin + '/demo/clearLog.php',
+    url: window.location.origin + '/demoV2/clearLog.php',
     data: {'logType': logType},
     success: function(response) {
       response = JSON.parse(response);
