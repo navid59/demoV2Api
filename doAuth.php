@@ -29,7 +29,7 @@ log::setRealTimeLog($setRealTimeLog);
  */
 $authorize = new authorize();
 $authorize->apiKey = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
-$authorize->backUrl = 'http://35.204.43.65/demoV2/backAuth.php';
+$authorize->backUrl = 'http://35.204.43.65/demoV2/backUrl.php';
 
 ?>
 <!doctype html>

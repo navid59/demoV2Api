@@ -4,6 +4,7 @@ include_once('lib/bank.php');
 
 class request extends start{
     public $authenticationToken;
+    public $ntpID;
     public $jsonRequest;
 
     function __construct(){

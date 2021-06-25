@@ -21,7 +21,7 @@ $dotenv->load();
 
 /**
  * if Session is expired
- * redirect to 404 - TEMPORARY
+ * redirect to 404
  * */ 
 if(count($_SESSION) == 0 || !isset($_SESSION)) {
     $url = 'http://35.204.43.65/demoV2/404.php';
@@ -29,25 +29,31 @@ if(count($_SESSION) == 0 || !isset($_SESSION)) {
     exit;
 }
 
+// die(print_r($_SESSION));
+
 $setRealTimeLog = 
             [
-                "BackUrl"   =>  "Is hitting - come from bank",
+                "BackUrl"   =>  "Is hitting - come back from bank",
                 "input"     => "Listen to Bank to get paRes",
                 "Output"    => "Will Call VerifyAuth"
             ];
 log::setRealTimeLog($setRealTimeLog);
-
 $setRealTimeLog = $_REQUEST;
 log::setRealTimeLog($setRealTimeLog);
 
 /**
  * Define verifyAuth class
+ * Set the parameters
+ * the "apiKey","isLive" can be set static or read from DB, File, ...
+ * you have the "authenticationToken","ntpID" from response of start action 
  */
 $verifyAuth = new verifyAuth();
-
-$verifyAuth->apiKey = $_SESSION['apiKey'];
+$verifyAuth->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
 $verifyAuth->authenticationToken = $_SESSION['authenticationToken'];
-$verifyAuth->ntpID = $_SESSION['ntpID'];
+$verifyAuth->ntpID               = $_SESSION['ntpID'];
+$verifyAuth->isLive              = false;
+
+// die(print_r($verifyAuth));
 
 /**
  * Set params for /payment/card/verify-auth

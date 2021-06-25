@@ -1,14 +1,15 @@
 <?php
 include_once('lib/log.php');
+include_once('lib/request.php');
 include_once("config/config.php");
 
 
-class verifyAuth {
-    public $apiKey;
-    public $authenticationToken;
-    public $ntpID;
+class verifyAuth extends request {
+    // public $apiKey;
+    // public $authenticationToken;
+    // public $ntpID;
     public function __construct(){
-        //
+        parent::__construct();
     }
 
     public function setVerifyAuth() {
@@ -25,7 +26,7 @@ class verifyAuth {
 
     // Send request to /payment/card/verify-auth
     public function sendRequestVerifyAuth($jsonStr) {  
-        $url = 'https://secure.sandbox.netopia-payments.com/payment/card/verify-auth';
+        $url = $this->isLive ? 'https://secure.netopia-payments.com/payment/card/verify-auth' : 'https://secure.sandbox.netopia-payments.com/payment/card/verify-auth';
         $ch = curl_init($url);
     
         $payload = $jsonStr; // json DATA

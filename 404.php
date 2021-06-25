@@ -21,6 +21,9 @@ $dotenv->load();
             <div class="row">
                 <h1>Error 404</h1>
             </div>
+            <div class="row">
+                <h5>May the session is expired</h5>
+            </div>
         </div>
         <?php include_once("assets/theme/inc/footer.inc"); ?>
     </body>
