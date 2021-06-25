@@ -49,11 +49,8 @@ $prices = array_column($products, 'pPrice');
     </ul>
   </div>
   <div class="col-md-8 order-md-1">
-      <h4 class="mb-3">Config Information</h4>
-      <p>The disabled fields are just to give some more information as demo version for developers</p>
-
+      <h4 class="mb-3">Checkout simulation form</h4>
       <hr class="mb-4">
-
       <div class="mb-3">                    
           <label for="orderID">order ID</label>
           <div class="input-group">

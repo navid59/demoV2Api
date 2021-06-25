@@ -5,6 +5,8 @@ error_reporting(E_ALL);
 
 include_once __DIR__ . '/vendor/autoload.php';
 include_once('lib/log.php');
+include_once('lib/request.php');
+include_once('lib/authorize.php');
 
 /**
  * Load .env 
@@ -14,10 +16,21 @@ $dotenv->load();
 
 $setRealTimeLog = 
             [
-                "Do Auth"    =>  "Is hitting - will redirect",
-                "What is " => "Send Parameter (paReq , backUrl) to the Bank"
+                "authorizeAction"  => "Authorize action Is hitting",
+                "authorize"        => "Send Parameter (paReq , backUrl) to the Bank"
             ];
 log::setRealTimeLog($setRealTimeLog);
+
+/**
+ * Set authorize parameters
+ * @param apiKey,paReq,backUrl
+ * the apiKey,backUrl can be set static or read from DB, File, ...
+ * you have the paReq token from response of start action 
+ */
+$authorize = new authorize();
+$authorize->apiKey = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
+$authorize->backUrl = 'http://35.204.43.65/demoV2/backAuth.php';
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -26,16 +39,16 @@ log::setRealTimeLog($setRealTimeLog);
         <div class="container">
             <?php include_once("assets/theme/inc/topNav.inc"); ?>
             <div class="row">
-                <?php include_once("assets/theme/doAuthForm.php"); ?>
+                <?php include_once("assets/theme/authForm.php"); ?>
             </div>
         </div>
 
         <?php include_once("assets/theme/inc/footer.inc"); ?>
         <script>
             (function() {
-                // To auto submit the page to Temporary Sandbox Bank simulator
-                // alert("Do Auth - make Form & Submit to Bank - Temporary Sandbox Bank simulator");
-                console.log('Do Auth - make Form & Submit to Bank - Temporary Sandbox Bank simulator');
+                /**
+                 * To auto submit the auth form
+                 */
                 document.getElementById('authForm').submit();
             })();
         </script>

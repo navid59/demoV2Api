@@ -63,11 +63,11 @@ $(function () {
             $('#conclusionMsg').append('<li>You will be redirecting to Bank Page</li>');
             
             /**
-             * Step 2) Sandbox/Auton
+             * Step 2) Sandbox/Auth
              * preparing for redirect
              */
-            var backUrl = window.location.origin + "/demoV2/backAuth.php"; 
-            doRedirectSandboxAuthorize(response.data.customerAction.formData.paReq, backUrl);            
+            doRedirectSandboxAuthorize(response.data.customerAction.formData.paReq); 
+
           } else if(response.data.error.code == 56) {
             $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
           } else {
@@ -101,9 +101,13 @@ $(function () {
   });
 });
 
-// JS make redirect to an internal page
-function doRedirectSandboxAuthorize(paReq, backUrl) {
-  var url = "doAuth.php?paReq="+paReq+"&backUrl="+backUrl;
+/**
+ * Checkout page is redirecting to doAuth for card with 3DS
+ * @param  paReq
+ * @return
+ * */ 
+function doRedirectSandboxAuthorize(paReq) {
+  var url = "doAuth.php?paReq="+paReq;
   window.location.href = url;
   return true;
 }
