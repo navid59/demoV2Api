@@ -1,5 +1,11 @@
 <?php
 include_once('lib/request.php');
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\SignatureInvalidException;
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
+
 class ipn extends request{
    
     public $posSignatureSet;
@@ -49,6 +55,235 @@ class ipn extends request{
 
     public function __construct(){
         parent::__construct();
+    }
+
+    /**
+     * to Verify IPN
+     * @return 
+     *  - a Json
+     */
+    public function verifyIPN() {
+
+        /**
+        * Default IPN response, 
+        * will change if there is any problem
+        */
+        $outputData = array(
+            'errorType'		=> self::ERROR_TYPE_NONE,
+            'errorCode' 	=> null,
+            'errorMessage'	=> ''
+        );
+
+        /**
+        *  Fetch all HTTP request headers
+        */
+        $aHeaders = $this->getApacheHeader();
+        if(!$this->validHeader($aHeaders)) {
+            echo 'IPN__header is not an valid HTTP HEADER' . PHP_EOL;
+            exit;
+        }
+
+        /**
+        *  fetch Verification-token from HTTP header 
+        */
+        $verificationToken = $this->getVerificationToken($aHeaders);
+        if($verificationToken === null)
+            {
+            echo 'IPN__Verification-token is missing in HTTP HEADER' . PHP_EOL;
+            exit;
+            }
+
+        
+        /**
+        * Analising verification token
+        * Just to make sure if Type is JWT & Use right encoding/decoding algorithm 
+        * Assign following var 
+        *  - $headb64, 
+        *  - $bodyb64,
+        *  - $cryptob64
+        */
+        $tks = \explode('.', $verificationToken);
+        if (\count($tks) != 3) {
+            throw new \Exception('Wrong_Verification_Token');
+            exit;
+        }
+        list($headb64, $bodyb64, $cryptob64) = $tks;
+        $jwtHeader = json_decode(base64_decode(\strtr($headb64, '-_', '+/')));
+        
+        if($jwtHeader->typ !== 'JWT') {
+            throw new \Exception('Wrong_Token_Type');
+            exit; 
+        }
+
+        /**
+        * check if publicKeyStr is defined
+        */
+        if(isset($this->publicKeyStr) && !is_null($this->publicKeyStr)){
+            $publicKey = openssl_pkey_get_public($this->publicKeyStr);
+            if($publicKey === false) {
+                echo 'IPN__public key is not a valid public key' . PHP_EOL; 
+                exit;
+            }
+        } else {
+            echo "IPN__Public key missing" . PHP_EOL; 
+            exit;
+        }
+
+
+        /**
+        * Get raw data
+        */
+        $HTTP_RAW_POST_DATA = file_get_contents('php://input');
+
+        /**
+        * The name of the alg defined in header of JWT
+        * Just in case we set the default algorithm
+        * Default alg is RS512
+        */
+        if(!isset($this->alg) || $this->alg==null){
+            throw new \Exception('IDS_Service_IpnController__INVALID_JWT_ALG');
+            exit;
+        }
+        $jwtAlgorithm = !is_null($jwtHeader->alg) ? $jwtHeader->alg : $this->alg ; // ???? May need to Compare with Verification-token header // Ask Alex
+
+        
+        try {
+            JWT::$timestamp = time() * 1000; 
+        
+           /**
+            * Decode from JWT
+            */
+            $objJwt = JWT::decode($verificationToken, $publicKey, array($jwtAlgorithm));
+        
+            if(strcmp($objJwt->iss, 'NETOPIA Payments') != 0)
+                {
+                throw new \Exception('IDS_Service_IpnController__E_VERIFICATION_FAILED_GENERAL');
+                exit;
+                }
+            
+            /**
+             * check active posSignature 
+             * check if is in set of signature too
+             */
+            if(empty($objJwt->aud) || $objJwt->aud != $this->activeKey){
+                throw new \Exception('IDS_Service_IpnController__INVALID_SIGNATURE');
+                exit;
+            }
+        
+            if(!in_array($objJwt->aud, $this->posSignatureSet,true)) {
+                throw new \Exception('IDS_Service_IpnController__INVALID_SIGNATURE_SET');
+                exit;
+            }
+            
+            if(!isset($this->hashMethod) || $this->hashMethod==null){
+                throw new \Exception('IDS_Service_IpnController__INVALID_HASH_METHOD');
+                exit;
+            }
+            
+            /**
+             * GET HTTP HEADER
+             */
+            $payload = $HTTP_RAW_POST_DATA;
+            /**
+             * validate payload
+             * sutable hash method is SHA512 
+             */
+            $payloadHash = base64_encode(hash ($this->hashMethod, $payload, true ));
+            /**
+             * check IPN data integrity
+             */
+        
+            if(strcmp($payloadHash, $objJwt->sub) != 0)
+                {
+                throw new \Exception('IDS_Service_IpnController__E_VERIFICATION_FAILED_TAINTED_PAYLOAD', E_VERIFICATION_FAILED_TAINTED_PAYLOAD);
+                print_r($payloadHash); // Temporay for Debuging
+                exit;
+                }
+        
+            try
+                {
+                $objIpn = json_decode($payload, false);
+                // hear, can make Log for $objIpn
+                }
+            catch(\Exception $e)
+                {
+                throw new \Exception('IDS_Service_IpnController__E_VERIFICATION_FAILED_PAYLOAD_FORMAT', E_VERIFICATION_FAILED_PAYLOAD_FORMAT);
+                }
+            
+            switch($objIpn->payment->status)
+                {
+                case self::STATUS_NEW:
+                case self::STATUS_CHARGEBACK_INIT: // chargeback initiat
+                case self::STATUS_CHARGEBACK_ACCEPT: // chargeback acceptat
+                case self::STATUS_SCHEDULED:
+                case self::STATUS_3D_AUTH:
+                case self::STATUS_CHARGEBACK_REPRESENTMENT:
+                case self::STATUS_REVERSED:
+                case self::STATUS_PENDING_ANY:
+                case self::STATUS_PROGRAMMED_RECURRENT_PAYMENT:
+                case self::STATUS_CANCELED_PROGRAMMED_RECURRENT_PAYMENT:
+                case self::STATUS_TRIAL_PENDING: //specific to Model_Purchase_Sms_Online; wait for ACTON_TRIAL IPN to start trial period
+                case self::STATUS_TRIAL: //specific to Model_Purchase_Sms_Online; trial period has started
+                case self::STATUS_EXPIRED: //cancel a not payed purchase 
+                case self::STATUS_OPENED: // preauthorizate (card)
+                case self::STATUS_PENDING:
+                case self::STATUS_ERROR: // error
+                case self::STATUS_DECLINED: // declined
+                case self::STATUS_FRAUD: // fraud
+                    /**
+                     * payment status is in fraud, reviw the payment
+                     */
+                    $orderLog = 'payment in reviwing';
+                    // hear, can make Log for $orderLog
+                break;
+                case self::STATUS_PENDING_AUTH: // in asteptare de verificare pentru tranzactii autorizate
+                    /**
+                     * update payment status, last modified date&time in your system
+                     */
+                    $orderLog = 'update payment status, last modified date&time in your system';
+                    // hear, can make Log for $orderLog;
+                break;
+                
+                case self::STATUS_PAID: // capturate (card)
+                case self::STATUS_CONFIRMED:
+                    /**
+                     * payment was confirmed; deliver goods
+                     */
+                    $orderLog = 'payment was confirmed; deliver goods';
+                    // hear, can make Log for $orderLog
+                break;
+                
+                case self::STATUS_CREDIT: // capturate si apoi refund
+                    /**
+                     * a previously confirmed payment eas refinded; cancel goods delivery
+                     */
+                    $orderLog = 'a previously confirmed payment eas refinded; cancel goods delivery';
+                    // hear, can make Log for $orderLog
+                break;
+                
+                case self::STATUS_CANCELED: // void
+                    /**
+                     * payment was cancelled; do not deliver goods
+                     */
+                    $orderLog = 'payment was cancelled; do not deliver goods';
+                    // hear, can make Log for $orderLog
+                break;
+                }
+            
+        } catch(\Exception $e)
+        {
+            $outputData['errorType']	= self::ERROR_TYPE_PERMANENT;
+            $outputData['errorCode']	= ($e->getCode() != 0) ? $e->getCode() : self::E_VERIFICATION_FAILED_GENERAL;
+            $outputData['errorMessage']	= $e->getMessage();
+            
+            $setRealTimeLog = [
+                            "IPN - Error"  =>  "Hash Data is not matched with subject",
+                            "ipnMsgError"  => 'ERROR_TYPE_PERMANENT -> E_VERIFICATION_FAILED_GENERAL'
+                            ];
+            // hear, can make Log for $setRealTimeLog;
+        }
+
+        return $outputData;
     }
 
     /**

@@ -45,7 +45,7 @@ class request extends start{
      */
     protected function setOrder() {
         $order = array(
-            'ntpID'         => isset($_POST['ntpID']) ? $_POST['ntpID'] : null,
+            'ntpID'         => isset($_POST['ntpID']) ? $_POST['ntpID'] : null, // is better to be always NULL
             'posSignature'  => (string) $this->posSignature,
             'dateTime'      => (string) date("c", strtotime(date("Y-m-d H:i:s"))),
             'description'   => (string) "DEMO API FROM WEB - V2",
