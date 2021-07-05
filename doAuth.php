@@ -30,6 +30,12 @@ log::setRealTimeLog($setRealTimeLog);
 $authorize = new authorize();
 $authorize->apiKey = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
 $authorize->backUrl = 'http://35.204.43.65/demoV2/backUrl.php';
+if(isset($_GET['paReq']) && !is_null($_GET['paReq'])) {
+    $authorize->paReq = $_GET['paReq'];
+} else {
+    throw new \Exception('paReg is not defined');
+    exit;
+}
 
 ?>
 <!doctype html>
@@ -42,7 +48,6 @@ $authorize->backUrl = 'http://35.204.43.65/demoV2/backUrl.php';
                 <?php include_once("assets/theme/authForm.php"); ?>
             </div>
         </div>
-
         <?php include_once("assets/theme/inc/footer.inc"); ?>
         <script>
             (function() {

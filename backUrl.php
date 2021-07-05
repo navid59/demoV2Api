@@ -13,7 +13,7 @@ include_once __DIR__ . '/vendor/autoload.php';
 /**
  * Load .env 
  * Read Base root , ... from .env
- * The  env var using in UI ,...
+ * The  env var using in UI ,..
  */
 
 $dotenv = new Dotenv\Dotenv(__DIR__);
@@ -51,6 +51,7 @@ $verifyAuth = new verifyAuth();
 $verifyAuth->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
 $verifyAuth->authenticationToken = $_SESSION['authenticationToken'];
 $verifyAuth->ntpID               = $_SESSION['ntpID'];
+$verifyAuth->paRes               = $_POST['paRes'];
 $verifyAuth->isLive              = false;
 
 // die(print_r($verifyAuth));

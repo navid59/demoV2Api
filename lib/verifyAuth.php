@@ -5,9 +5,7 @@ include_once("config/config.php");
 
 
 class verifyAuth extends request {
-    // public $apiKey;
-    // public $authenticationToken;
-    // public $ntpID;
+    public $paRes;
     public function __construct(){
         parent::__construct();
     }
@@ -17,7 +15,7 @@ class verifyAuth extends request {
             "authenticationToken" => (string) $this->authenticationToken,
             "ntpID" => (string) $this->ntpID,
             "formData" => [
-                "paRes" => (string) $_POST['paRes']
+                "paRes" => (string) $this->paRes
             ]
         ];
 

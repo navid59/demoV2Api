@@ -19,7 +19,7 @@
                     <label for="cc-expiration-year">Error Message</label>
                     <input type="text" class="form-control" id="" name="" value="<?=$paymentResultArr->data->error->message;?>" placeholder="" disabled >
                     <div class="invalid-feedback">
-                        Data -> Error ->  Message
+                        Data -> Error ->  Message 
                     </div>
                 </div>
             </div>
@@ -80,12 +80,12 @@
             <hr>
             <h4 class="mb-3">paRes Token from Bank by Post Method</h4>
             <?php
-            if(isset($_POST['paRes'])){
+            if(isset($verifyAuth->paRes)){
                 ?>
                     <div class="row">
                         <div class="col">
                             <label for="cc-expiration-year">paRes Token</label>
-                            <input type="text" class="form-control" id="" name="" value="<?=$_POST['paRes']?>" placeholder="" disabled >
+                            <input type="text" class="form-control" id="" name="" value="<?=$verifyAuth->paRes;?>" placeholder="" disabled >
                             <div class="invalid-feedback">
                                 Post Method -> From Bank -> paRes
                             </div>

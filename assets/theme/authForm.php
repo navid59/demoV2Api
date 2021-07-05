@@ -1,5 +1,5 @@
 <?php 
-include_once('lib/bank.php');
+include_once('lib/bank.php'); 
 ?>
 <div class="col" style="padding-top:15px;">
     <form id="authForm" action="<?=bank::validateBackUrl();?>" method="POST" enctype="application/x-www-form-urlencoded" class="" novalidate>
@@ -18,7 +18,7 @@ include_once('lib/bank.php');
       
         <div class="mb-3">
             <!-- <label for="paReq">Token paReq</label> -->
-            <input type="hidden" class="form-control" id="paReq" name="paReq" placeholder="String - Length(0-255)" value="<?=$_GET['paReq']?>" required >
+            <input type="hidden" class="form-control" id="paReq" name="paReq" placeholder="String - Length(0-255)" value="<?=$authorize->paReq;?>" required >
             <div class="invalid-feedback" style="width: 100%;">
                 paReq ID is required.
             </div>
@@ -29,11 +29,9 @@ include_once('lib/bank.php');
             <input type="hidden" class="form-control" id="backUrl" name="backUrl"  value="<?=$authorize->backUrl;?>" placeholder="Enter Back URL">
         </div>
 
-      <!-- Button, is removed, because, the form will be submit automatically -->
-      
       <hr class="mb-4">
+      <!-- Button, is removed, because, the form will be submit automatically -->
       <!-- <button class="btn btn-primary btn-lg btn-block" id="doAuthToBank" type="submit">Continue to Auth to the Bank</button> -->
-     
     </form>
   </div>
 </div>

@@ -15,7 +15,8 @@ $request->redirectUrl   = '';
 $request->apiKey        = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
 $request->isLive        = false;
 
-$request->setSetting();
+// $request->setSetting();  // In START ACTION we don't need to read anything from certificates/setting.json //
+
 /**
  * prepare json for start action
  */
