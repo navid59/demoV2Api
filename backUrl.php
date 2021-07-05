@@ -54,8 +54,6 @@ $verifyAuth->ntpID               = $_SESSION['ntpID'];
 $verifyAuth->paRes               = $_POST['paRes'];
 $verifyAuth->isLive              = false;
 
-// die(print_r($verifyAuth));
-
 /**
  * Set params for /payment/card/verify-auth
  * Format Json

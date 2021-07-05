@@ -21,8 +21,8 @@ log::setRealTimeLog($setRealTimeLog);
  * get defined keys
  */
 $ntpIpn = new ipn(); // New IPN OBJ
-// $ntpSetting = $ipn->getSetting();
-$ntpIpn->posSignature      = 'LXTP-3WDM-WVXL-GC8B-Y5DA';
+
+$ntpIpn->activeKey         = 'LXTP-3WDM-WVXL-GC8B-Y5DA'; // activeKey or posSignature -> Ask Alex
 $ntpIpn->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA';
 $ntpIpn->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA_fake1'; 
 $ntpIpn->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA_fake2'; 
@@ -79,6 +79,27 @@ if($verificationToken === null)
     exit;
     }
 
+ /**
+  * Analising verification token
+  * Just to make sure if Type is JWT & Use right encoding/decoding algorithm 
+  * Assign following var 
+  *  - $headb64, 
+  *  - $bodyb64,
+  *  - $cryptob64
+  */
+  $tks = \explode('.', $verificationToken);
+  if (\count($tks) != 3) {
+    throw new \Exception('Wrong_Verification_Token');
+    exit;
+  }
+  list($headb64, $bodyb64, $cryptob64) = $tks;
+  $jwtHeader = json_decode(base64_decode(\strtr($headb64, '-_', '+/')));
+  
+  if($jwtHeader->typ !== 'JWT') {
+    throw new \Exception('Wrong_Token_Type');
+    exit; 
+  }
+
 /**
  * check if publicKeyStr is defined
  */
@@ -97,37 +118,23 @@ if(isset($ntpIpn->publicKeyStr) && !is_null($ntpIpn->publicKeyStr)){
  * Get raw data
  */
 $HTTP_RAW_POST_DATA = file_get_contents('php://input');
+
+
 // $input = json_decode($HTTP_RAW_POST_DATA); // can be get all recived data from $input
+// die($input);
 
-die($HTTP_RAW_POST_DATA);
 
- /**
-  * Analising verification token
-  * Just to make sure if Type is JWT & Use right encoding/decoding algorithm 
-  */
-  $tks = \explode('.', $verificationToken);
-  if (\count($tks) != 3) {
-    throw new \Exception('Wrong_Verification_Token');
-    exit;
-  }
-  list($headb64, $bodyb64, $cryptob64) = $tks;
-  $jwtHeader = json_decode(base64_decode(\strtr($headb64, '-_', '+/')));
-  
-  if($jwtHeader->typ !== 'JWT') {
-    throw new \Exception('Wrong_Token_Type');
-    exit; 
-  }
 
   /**
    * The name of the alg defined in header of JWT
    * Just in case we set the default algorithm
    * Default alg is RS512
    */
-  if(!isset($ntpSetting['alg']) || $ntpSetting['alg']==null){
+  if(!isset($ntpIpn->alg) || $ntpIpn->alg==null){
     throw new \Exception('IDS_Service_IpnController__INVALID_JWT_ALG');
     exit;
   }
-  $jwtAlgorithm = !is_null($jwtHeader->alg) ? $jwtHeader->alg : $ntpSetting['alg'] ;
+  $jwtAlgorithm = !is_null($jwtHeader->alg) ? $jwtHeader->alg : $ntpIpn->alg ; // ???? May need to Compare with Verification-token header
 
 try {
     JWT::$timestamp = time() * 1000;
@@ -147,17 +154,17 @@ try {
      * check active posSignature 
      * check if is in set of signature too
      */
-    if(empty($objJwt->aud) || $objJwt->aud != $ntpSetting['activeKey']){
+    if(empty($objJwt->aud) || $objJwt->aud != $ntpIpn->activeKey){
         throw new \Exception('IDS_Service_IpnController__INVALID_SIGNATURE');
         exit;
     }
 
-    if(!in_array($objJwt->aud,$ntpSetting['keySet'],true)) {
+    if(!in_array($objJwt->aud, $ntpIpn->posSignatureSet,true)) {
         throw new \Exception('IDS_Service_IpnController__INVALID_SIGNATURE_SET');
         exit;
     }
     
-    if(!isset($ntpSetting['hashMethod']) || $ntpSetting['hashMethod']==null){
+    if(!isset($ntpIpn->hashMethod) || $ntpIpn->hashMethod==null){
         throw new \Exception('IDS_Service_IpnController__INVALID_HASH_METHOD');
         exit;
     }
@@ -170,7 +177,7 @@ try {
 	 * validate payload
      * sutable hash method is SHA512 
 	 */
-    $payloadHash = base64_encode(hash ($ntpSetting['hashMethod'], $payload, true ));
+    $payloadHash = base64_encode(hash ($ntpIpn->hashMethod, $payload, true ));
     /**
 	 * check IPN data integrity
 	 */
