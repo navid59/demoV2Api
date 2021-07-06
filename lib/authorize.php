@@ -1,5 +1,5 @@
 <?php 
-class authorize extends start{
+class Authorize extends Start{
     public $backUrl;
     public $paReq;
     

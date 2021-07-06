@@ -35,7 +35,7 @@ if(count($_SESSION) == 0 || !isset($_SESSION)) {
  * the "apiKey","isLive" can be set static or read from DB, File, ...
  * you have the "authenticationToken","ntpID" from response of start action 
  */
-$verifyAuth = new verifyAuth();
+$verifyAuth = new VerifyAuth();
 $verifyAuth->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
 $verifyAuth->authenticationToken = $_SESSION['authenticationToken'];
 $verifyAuth->ntpID               = $_SESSION['ntpID'];

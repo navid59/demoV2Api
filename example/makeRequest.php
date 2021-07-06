@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 include_once('classes/log.php');
 include_once('../lib/request.php');
 
-$request = new request();
+$request = new Request();
 $request->posSignature  = 'LXTP-3WDM-WVXL-GC8B-Y5DA';
 $request->apiKey        = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
 $request->isLive        = false;

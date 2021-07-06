@@ -3,7 +3,7 @@ include_once('classes/log.php');
 include_once('../lib/request.php');
 
 
-class verifyAuth extends request {
+class VerifyAuth extends Request {
     public $paRes;
     public function __construct(){
         parent::__construct();

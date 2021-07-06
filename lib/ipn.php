@@ -6,7 +6,7 @@ use Firebase\JWT\SignatureInvalidException;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 
-class ipn extends request{
+class IPN extends Request{
    
     public $posSignatureSet;
     public $hashMethod;

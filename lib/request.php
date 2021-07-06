@@ -1,7 +1,7 @@
 <?php 
 include_once('../lib/start.php');
 
-class request extends start {
+class Request extends Start {
     public $authenticationToken;
     public $ntpID;
     public $jsonRequest;

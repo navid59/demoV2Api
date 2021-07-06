@@ -16,7 +16,7 @@ log::setRealTimeLog($setRealTimeLog);
 /**
  * get defined keys
  */
-$ntpIpn = new ipn(); // New IPN OBJ
+$ntpIpn = new IPN();
 
 $ntpIpn->activeKey         = 'LXTP-3WDM-WVXL-GC8B-Y5DA'; // activeKey or posSignature -> Ask Alex
 $ntpIpn->posSignatureSet[] = 'LXTP-3WDM-WVXL-GC8B-Y5DA';

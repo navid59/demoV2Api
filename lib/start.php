@@ -1,5 +1,5 @@
 <?php 
-class start {
+class Start {
     public $posSignature;
     public $notifyUrl;
     public $redirectUrl;
@@ -41,14 +41,6 @@ class start {
             if (!curl_errno($ch)) {
                 switch ($http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE)) {
                     case 200:  # OK
-                        // $setRealTimeLog = 
-                        // [
-                        //     "Code" =>  200,
-                        //     "Message" => "Request sent successfully."
-                        // ];
-                        // log::setLog(200, null ,$setRealTimeLog);    
-                        
-                        $this->backUrl = "XXXX_".rand(1, 100);
                         $arr = array(
                             'status'  => 1,
                             'code'    => $http_code,
@@ -56,14 +48,7 @@ class start {
                             'data'    => json_decode($result)
                         );
                     break;
-                    case 404:  # Not Found
-                        // $setRealTimeLog = 
-                        // [
-                        //     "Code" =>  404,
-                        //     "Message" => "You send request to wrong URL."
-                        // ];
-                        // log::setLog(404, null ,$setRealTimeLog);    
-                        
+                    case 404:  # Not Found 
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,
@@ -72,13 +57,6 @@ class start {
                         );
                     break;
                     case 400:  # Bad Request
-                        // $setRealTimeLog = 
-                        // [
-                        //     "Code" =>  400,
-                        //     "Message" => "You send Bad Request."
-                        // ];
-                        // log::setLog(404, null ,$setRealTimeLog);
-
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,
@@ -95,11 +73,6 @@ class start {
                         );
                     break;
                     default:
-                        // $setRealTimeLog = 
-                        // [
-                        //     "Message" => "Opps! Something is wrong."
-                        // ];
-                        // log::setLog("xx", null ,$setRealTimeLog);
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,

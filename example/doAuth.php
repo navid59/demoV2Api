@@ -22,8 +22,8 @@ $dotenv->load();
  * the apiKey,backUrl can be set static or read from DB, File, ...
  * you have the paReq token from response of start action 
  */
-$authorize = new authorize();
-$authorize->apiKey  = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
+$authorize = new Authorize();
+$authorize->apiKey  = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0'; // Put Your key here
 $authorize->backUrl = 'http://35.204.43.65/demoV2/example/backUrl.php';
 $authorize->paReq   = $_GET['paReq'];
 $authorize->bankUrl = $_SESSION['authorizeUrl'];
