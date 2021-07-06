@@ -5,8 +5,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include_once('lib/log.php');
-include_once('lib/verifyAuth.php');
+include_once('classes/log.php');
+include_once('../lib/verifyAuth.php');
 
 
 include_once __DIR__ . '/vendor/autoload.php';
@@ -24,22 +24,10 @@ $dotenv->load();
  * redirect to 404
  * */ 
 if(count($_SESSION) == 0 || !isset($_SESSION)) {
-    $url = 'http://35.204.43.65/demoV2/404.php';
+    $url = getenv('PROJECT_SERVER_ADDRESS').getenv('PROJECT_BASE_ROOT').getenv('PROJECT_404_PAGE');
     header("Location: $url");
     exit;
 }
-
-// die(print_r($_SESSION));
-
-$setRealTimeLog = 
-            [
-                "BackUrl"   =>  "Is hitting - come back from bank",
-                "input"     => "Listen to Bank to get paRes",
-                "Output"    => "Will Call VerifyAuth"
-            ];
-log::setRealTimeLog($setRealTimeLog);
-$setRealTimeLog = $_REQUEST;
-log::setRealTimeLog($setRealTimeLog);
 
 /**
  * Define verifyAuth class
@@ -54,11 +42,14 @@ $verifyAuth->ntpID               = $_SESSION['ntpID'];
 $verifyAuth->paRes               = $_POST['paRes'];
 $verifyAuth->isLive              = false;
 
+
 /**
  * Set params for /payment/card/verify-auth
- * Format Json
+ * @return 
+ * - a Json string
  */
 $jsonAuthParam = $verifyAuth->setVerifyAuth();
+
 
 /**
  * Send request to /payment/card/verify-auth
@@ -69,14 +60,14 @@ $paymentResultArr = json_decode($paymentResult);
 ?>
 <!doctype html>
 <html lang="en">
-    <?php include_once("assets/theme/inc/header.inc"); ?>
+    <?php include_once("theme/inc/header.inc"); ?>
     <body class="bg-light">
         <div class="container">
-            <?php include_once("assets/theme/inc/topNav.inc"); ?>
+            <?php include_once("theme/inc/topNav.inc"); ?>
             <div class="row">
-                <?php include_once("assets/theme/backAuthForm.php"); ?>
+                <?php include_once("theme/backAuthForm.php"); ?>
             </div>
         </div>
-        <?php include_once("assets/theme/inc/footer.inc"); ?>
+        <?php include_once("theme/inc/footer.inc"); ?>
     </body>
 </html>

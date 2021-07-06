@@ -1,8 +1,7 @@
 <?php 
-include_once('lib/start.php');
-include_once('lib/bank.php');
+include_once('../lib/start.php');
 
-class request extends start{
+class request extends start {
     public $authenticationToken;
     public $ntpID;
     public $jsonRequest;
@@ -11,17 +10,17 @@ class request extends start{
         parent::__construct();
     }
 
-    protected function setConfig() {
+    public function setConfig($configData) {
         $config = array(
-            'emailTemplate' => $_POST['emailTemplate'],
-            'notifyUrl'     => $this->notifyUrl,
-            'redirectUrl'   => $this->redirectUrl,
-            'language'      => $_POST['language']
+            'emailTemplate' => (string) isset($configData['emailTemplate']) ? $configData['emailTemplate'] : 'confirm',
+            'notifyUrl'     => (string) $configData['notifyUrl'],
+            'redirectUrl'   => (string) $configData['redirectUrl'],
+            'language'      => (string) isset($configData['language']) ? $configData['language'] : 'RO'
         );
         return $config;
     }
 
-    protected function setPayment() {
+    public function setPayment($cardData) {
         $payment = array(
             'options' => [
                 'installments' => (int) 1,
@@ -29,10 +28,10 @@ class request extends start{
             ],
             'instrument' => [
                 'type'          => (string) "card",
-                'account'       => (string) $_POST['account'],
-                'expMonth'      => (int) $_POST['expMonth'],
-                'expYear'       => (int) $_POST['expYear'],
-                'secretCode'    => (string) $_POST['secretCode'],
+                'account'       => (string) $cardData['account'],
+                'expMonth'      => (int) $cardData['expMonth'],
+                'expYear'       => (int) $cardData['expYear'],
+                'secretCode'    => (string) $cardData['secretCode'],
                 'token'         => null
             ],
             'data' => null
@@ -43,38 +42,38 @@ class request extends start{
     /**
      * Set the order
      */
-    protected function setOrder() {
+    public function setOrder($orderData) {
         $order = array(
-            'ntpID'         => isset($_POST['ntpID']) ? $_POST['ntpID'] : null, // is better to be always NULL
+            'ntpID'         => (string) null, 
             'posSignature'  => (string) $this->posSignature,
             'dateTime'      => (string) date("c", strtotime(date("Y-m-d H:i:s"))),
-            'description'   => (string) "DEMO API FROM WEB - V2",
-            'orderID'       => (string) $_POST['orderID'],
-            'amount'        => (float)  $_POST['amount'],
-            'currency'      => (string) $_POST['currency'],
+            'description'   => (string) $orderData->description,
+            'orderID'       => (string) $orderData->orderID,
+            'amount'        => (float)  $orderData->amount,
+            'currency'      => (string) $orderData->currency,
             'billing'       => [
-                'email'         => (string) $_POST['billingEmail'],
-                'phone'         => (string) $_POST['billingPhone'],
-                'firstName'     => (string) $_POST['billingFirstName'],
-                'lastName'      => (string) $_POST['billingLastName'],
-                'city'          => (string) $_POST['billingCity'],
-                'country'       => (string) $_POST['billingCountry'],
-                'state'         => (string) $_POST['billingState'],
-                'postalCode'    => (string) $_POST['billingZip'],
-                'details'       => (string) "Fara Detalie"
+                'email'         => (string) $orderData->billing->email,
+                'phone'         => (string) $orderData->billing->phone,
+                'firstName'     => (string) $orderData->billing->firstName,
+                'lastName'      => (string) $orderData->billing->lastName,
+                'city'          => (string) $orderData->billing->city,
+                'country'       => (string) $orderData->billing->country,
+                'state'         => (string) $orderData->billing->state,
+                'postalCode'    => (string) $orderData->billing->postalCode,
+                'details'       => (string) $orderData->billing->details
             ],
             'shipping'      => [
-                'email'         => (string) $_POST['shippingEmail'],
-                'phone'         => (string) $_POST['shippingPhone'],
-                'firstName'     => (string) $_POST['shippingFirstName'],
-                'lastName'      => (String) $_POST['shippingLastName'],
-                'city'          => (string) $_POST['shippingCity'],
-                'country'       => (string) $_POST['shippingCountry'],
-                'state'         => (string) $_POST['shippingState'],
-                'postalCode'    => (string) $_POST['shippingZip'],
-                'details'       => (string) "Fara Detalie"
+                'email'         => (string) $orderData->shipping->email,
+                'phone'         => (string) $orderData->shipping->phone,
+                'firstName'     => (string) $orderData->shipping->firstName,
+                'lastName'      => (String) $orderData->shipping->lastName,
+                'city'          => (string) $orderData->shipping->city,
+                'country'       => (string) $orderData->shipping->country,
+                'state'         => (string) $orderData->shipping->state,
+                'postalCode'    => (string) $orderData->shipping->postalCode,
+                'details'       => (string) $orderData->shipping->details
             ],
-            'products' => $this->setProducts(),
+            'products' => $orderData->products,
             'installments'  => array(
                                     'selected'  => (int) 0,
                                     'available' => [(int) 0]
@@ -84,32 +83,16 @@ class request extends start{
         return $order;
     }
 
-    /**
-     * Set the Product Items
-     */
-    protected function setProducts()
-    {
-        foreach ($_POST['products'] as $productItem) {
-            $proArr[] = [
-                'name'     => (string) $productItem['pName'],
-                'code'     => (string) $productItem['pCode'],
-                'category' => (string) $productItem['pCategory'],
-                'price'    => (int) $productItem['pPrice'],
-                'vat'      => (int) $productItem['pVat']
-            ];
-        }
-        return $proArr;
-    }
 
     /**
      * Set the request to payment
      * @output json
      */
-    public function setRequest() {
+    public function setRequest($configData, $cardData, $orderData) {
         $startArr = array(
-          'config'  => $this->setConfig(),
-          'payment' => $this->setPayment(),
-          'order'   => $this->setOrder()
+          'config'  => $this->setConfig($configData),
+          'payment' => $this->setPayment($cardData),
+          'order'   => $this->setOrder($orderData)
       );
       
       // make json Data 

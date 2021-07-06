@@ -1,5 +1,5 @@
 <?php
-include_once('lib/request.php');
+include_once('../lib/request.php');
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;

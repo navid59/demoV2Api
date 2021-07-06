@@ -1,8 +1,5 @@
-<?php 
-include_once('lib/bank.php'); 
-?>
 <div class="col" style="padding-top:15px;">
-    <form id="authForm" action="<?=bank::validateBackUrl();?>" method="POST" enctype="application/x-www-form-urlencoded" class="" novalidate>
+    <form id="authForm" action="<?=$authorize->bankUrl;?>" method="POST" enctype="application/x-www-form-urlencoded" class="" novalidate>
     <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Authorize Information</h4>
         <p>The <b>API KEY, Token paReq, Back Url</b> as parameters, will send to authorize action</p>

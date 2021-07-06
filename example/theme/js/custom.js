@@ -38,10 +38,9 @@ $(function () {
   $.ajax({
       type: 'post',
       url: 'makeRequest.php',
-      // data: $('form').serialize(),
       data: $('#checkoutForm').serialize(),
       success: function (response) {
-        console.log('form was submitted');
+        console.log('Checkout form submited');  // Console Log
         
         $('#message').show();
         response = JSON.parse(response);
@@ -51,14 +50,9 @@ $(function () {
           $('#message-success').show();
           $('#msgTitle').html("Data Sent");
           
-          
-          console.log(response.data); // TEMPORARY
-          console.log(response.data.error.code);  // TEMPORARY
+          console.log("Error Code : "+response.data.error.code);  // Console Log
 
           if(response.data.error.code == 100 & response.data.payment.status == 15) {
-            $('#authenticationToken').val(response.data.customerAction.authenticationToken);
-            $('#paReq').val(response.data.customerAction.formData.paReq);
-            $('#ntpID').val(response.data.payment.ntpID);
             $('#conclusionMsg').append('<li>Your card have 3DS</li>');
             $('#conclusionMsg').append('<li>You will be redirecting to Bank Page</li>');
             
@@ -115,7 +109,7 @@ function doRedirectSandboxAuthorize(paReq) {
 // Display Logs Real Time
 function getLog() {
   $.ajax({
-      url: window.location.origin + '/demoV2/logs/realtimeLog.log',
+      url: window.location.origin + '/demoV2/example/logs/realtimeLog.log',
       dataType: 'text',
       success: function(text) {
           $("#containerDiv").html(text);
@@ -127,7 +121,7 @@ function getLog() {
 // Display IPN Logs Real Time
 function getIpnLog() {
   $.ajax({
-      url: window.location.origin + '/demoV2/logs/ipnLog.log',
+      url: window.location.origin + '/demoV2/example/logs/ipnLog.log',
       dataType: 'text',
       success: function(text) {
           $("#containerDivIpnLog").html(text);
@@ -139,7 +133,7 @@ function getIpnLog() {
 // Display Success page Logs Real Time
 function getReturnLog() {
   $.ajax({
-      url: window.location.origin + '/demoV2/logs/returnLog.log',
+      url: window.location.origin + '/demoV2/example/logs/returnLog.log',
       dataType: 'text',
       success: function(text) {
           $("#containerDivReturnLog").html(text);
@@ -153,7 +147,7 @@ function cleanLogFile(logType) {
   // alert("Log Type : "+logType);
   $.ajax({
     type: 'post',
-    url: window.location.origin + '/demoV2/clearLog.php',
+    url: window.location.origin + '/demoV2/example/clearLog.php',
     data: {'logType': logType},
     success: function(response) {
       response = JSON.parse(response);

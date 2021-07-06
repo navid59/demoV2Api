@@ -13,11 +13,10 @@ $dotenv->load();
 ?>
 <!doctype html>
 <html lang="en">
-    <?php include_once("assets/theme/inc/header.inc"); ?>
+    <?php include_once("theme/inc/header.inc"); ?>
     <body class="bg-light">
         <div class="container">
-            <?php include_once("assets/theme/inc/topNav.inc"); ?>
-            <?php // include_once("assets/theme/inc/nav.inc"); ?>
+            <?php include_once("theme/inc/topNav.inc"); ?>
             <div class="row">
                 <h1>Error 404</h1>
             </div>
@@ -25,6 +24,6 @@ $dotenv->load();
                 <h5>May the session is expired</h5>
             </div>
         </div>
-        <?php include_once("assets/theme/inc/footer.inc"); ?>
+        <?php include_once("theme/inc/footer.inc"); ?>
     </body>
 </html>

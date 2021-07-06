@@ -1,12 +1,4 @@
 <?php
-/**
- * include i18n class and initialize it
- * init object will load language files and parse them .
- **/ 
-require_once 'lib/i18n.class.php';
-$i18n = new i18n('assets/lang/lang_en.json', 'assets/lang/cache', 'en');
-$i18n->init();
-
 $products = array(
     array(
         'id' => 1,

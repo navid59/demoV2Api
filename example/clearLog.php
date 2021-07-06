@@ -3,8 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include_once('lib/log.php');
-// die(print_r($_POST));
+include_once('classes/log.php');
+
 $log = new log();
 switch($_POST['logType']){
     case 1:

@@ -1,14 +1,11 @@
 <?php 
 class start {
     public $posSignature;
-    // public $posSignatureSet;
     public $notifyUrl;
     public $redirectUrl;
     public $apiKey;
-    
     public $isLive;
-    // public $hashMethod;
-    // public $alg;
+    public $backUrl;
 
     
     function __construct(){
@@ -44,13 +41,14 @@ class start {
             if (!curl_errno($ch)) {
                 switch ($http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE)) {
                     case 200:  # OK
-                        $setRealTimeLog = 
-                        [
-                            "Code" =>  200,
-                            "Message" => "Request sent successfully."
-                        ];
-                        log::setLog(200, null ,$setRealTimeLog);    
-    
+                        // $setRealTimeLog = 
+                        // [
+                        //     "Code" =>  200,
+                        //     "Message" => "Request sent successfully."
+                        // ];
+                        // log::setLog(200, null ,$setRealTimeLog);    
+                        
+                        $this->backUrl = "XXXX_".rand(1, 100);
                         $arr = array(
                             'status'  => 1,
                             'code'    => $http_code,
@@ -59,12 +57,12 @@ class start {
                         );
                     break;
                     case 404:  # Not Found
-                        $setRealTimeLog = 
-                        [
-                            "Code" =>  404,
-                            "Message" => "You send request to wrong URL."
-                        ];
-                        log::setLog(404, null ,$setRealTimeLog);    
+                        // $setRealTimeLog = 
+                        // [
+                        //     "Code" =>  404,
+                        //     "Message" => "You send request to wrong URL."
+                        // ];
+                        // log::setLog(404, null ,$setRealTimeLog);    
                         
                         $arr = array(
                             'status'  => 0,
@@ -74,12 +72,13 @@ class start {
                         );
                     break;
                     case 400:  # Bad Request
-                        $setRealTimeLog = 
-                        [
-                            "Code" =>  400,
-                            "Message" => "You send Bad Request."
-                        ];
-                        log::setLog(404, null ,$setRealTimeLog);
+                        // $setRealTimeLog = 
+                        // [
+                        //     "Code" =>  400,
+                        //     "Message" => "You send Bad Request."
+                        // ];
+                        // log::setLog(404, null ,$setRealTimeLog);
+
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,
@@ -96,11 +95,11 @@ class start {
                         );
                     break;
                     default:
-                        $setRealTimeLog = 
-                        [
-                            "Message" => "Opps! Something is wrong."
-                        ];
-                        log::setLog("xx", null ,$setRealTimeLog);
+                        // $setRealTimeLog = 
+                        // [
+                        //     "Message" => "Opps! Something is wrong."
+                        // ];
+                        // log::setLog("xx", null ,$setRealTimeLog);
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,
@@ -127,31 +126,31 @@ class start {
     /**
      * Set the setting in json file
      */
-    public function setSetting() {
-        $fileTmpKey = 'certificates/setting.json';
-        try {
-            $keyArr = array(
-                // 'activeKey' => $this->posSignature,
-                // 'keySet'    => $this->posSignatureSet,
-                // 'isLive'    => $this->isLive,
-                // 'hashMethod'=> $this->hashMethod,
-                // 'alg'       => $this->alg
-            );
+    // public function setSetting() {
+    //     $fileTmpKey = 'certificates/setting.json';
+    //     try {
+    //         $keyArr = array(
+    //             // 'activeKey' => $this->posSignature,
+    //             // 'keySet'    => $this->posSignatureSet,
+    //             // 'isLive'    => $this->isLive,
+    //             // 'hashMethod'=> $this->hashMethod,
+    //             // 'alg'       => $this->alg
+    //         );
 
-            file_put_contents($fileTmpKey, json_encode($keyArr));
-            return true;
-        } catch (\Throwable $th) {
-            //throw $th;
-            return false;
-        }
-    }
+    //         file_put_contents($fileTmpKey, json_encode($keyArr));
+    //         return true;
+    //     } catch (\Throwable $th) {
+    //         //throw $th;
+    //         return false;
+    //     }
+    // }
 
     /**
      * get setting value from json file
      */
-    public function getSetting() {
-        $jsonSetting = file_get_contents('certificates/setting.json');
-        $arrSetting  = json_decode($jsonSetting, true);
-        return($arrSetting);
-    }
+    // public function getSetting() {
+    //     $jsonSetting = file_get_contents('certificates/setting.json');
+    //     $arrSetting  = json_decode($jsonSetting, true);
+    //     return($arrSetting);
+    // }
 }

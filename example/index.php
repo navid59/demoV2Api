@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include_once __DIR__ . '/vendor/autoload.php';
-include_once('lib/log.php');
+include_once('classes/log.php');
 
 
 /**
@@ -19,15 +19,15 @@ log::setRealTimeLog(array('CheckoutPage' => getenv('LOG_TXT_CHECKOUT') ? getenv(
 ?>
 <!doctype html>
 <html lang="en">
-    <?php include_once("assets/theme/inc/header.inc"); ?>
+    <?php include_once("theme/inc/header.inc"); ?>
     <body class="bg-light">
         <div class="container">
-            <?php include_once("assets/theme/inc/topNav.inc"); ?>
-            <?php include_once("assets/theme/inc/nav.inc"); ?>
+            <?php include_once("theme/inc/topNav.inc"); ?>
+            <?php include_once("theme/inc/nav.inc"); ?>
             <div class="row">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <?php include_once("assets/theme/checkout.php"); ?>
+                        <?php include_once("theme/checkout.php"); ?>
                     </div>
                     <div class="tab-pane fade" id="getStatus" role="tabpanel" aria-labelledby="getStatus-tab">Check a payment status</div>
                     <div class="tab-pane fade" id="expirePayment" role="tabpanel" aria-labelledby="expirePayment-tab">Expire a Payment</div>
@@ -78,11 +78,11 @@ log::setRealTimeLog(array('CheckoutPage' => getenv('LOG_TXT_CHECKOUT') ? getenv(
                         </div>
                     </div>
                     <div class="tab-pane fade" id="document" role="tabpanel" aria-labelledby="document-tab">
-                        <?php include_once("assets/theme/apiDocument.php"); ?>
+                        <?php include_once("theme/apiDocument.php"); ?>
                     </div>
                 </div>
             </div>
         </div>
-        <?php include_once("assets/theme/inc/footer.inc"); ?>
+        <?php include_once("theme/inc/footer.inc"); ?>
     </body>
 </html>

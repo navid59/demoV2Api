@@ -1,7 +1,6 @@
 <?php
-include_once('lib/log.php');
-include_once('lib/request.php');
-include_once("config/config.php");
+include_once('classes/log.php');
+include_once('../lib/request.php');
 
 
 class verifyAuth extends request {
