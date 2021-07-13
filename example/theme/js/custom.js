@@ -63,8 +63,25 @@ $(function () {
             doRedirectSandboxAuthorize(response.data.customerAction.formData.paReq); 
 
           } else if(response.data.error.code == 56) {
+            $('#alertTitle').html("Duplicate Order");
             $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
-          } else {
+          }else if(response.data.error.code == 19) {
+            $('#alertTitle').html("Error");
+            $('#conclusionMsg').append('<li>Expire Card Error</li>');
+            $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
+          } else if(response.data.error.code == 20) {
+            $('#alertTitle').html("Error");
+            $('#conclusionMsg').append('<li>Fonduri insuficiente</li>');
+            $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
+          }  else if(response.data.error.code == 21 || response.data.error.code == 22) {
+            $('#alertTitle').html("Error");
+            $('#conclusionMsg').append('<li>CVV Error</li>');
+            $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
+          } else if(response.data.error.code == 34) {
+            $('#alertTitle').html("Error");
+            $('#conclusionMsg').append('<li>Transaction not allowed</li>');
+            $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
+          }else {
             $('#authenticationToken').val(response.data.customerAction.authenticationToken);
             $('#conclusionMsg').append('<li>Your card dosn\'t have 3DS!!!</li>');
           }

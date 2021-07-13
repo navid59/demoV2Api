@@ -9,8 +9,8 @@ include_once('classes/log.php');
 include_once('../lib/request.php');
 
 $request = new Request();
-$request->posSignature  = 'LXTP-3WDM-WVXL-GC8B-Y5DA';
-$request->apiKey        = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
+$request->posSignature  = 'LXTP-3WDM-WVXL-GC8B-Y5DA';                                 // your signiture ID hear
+$request->apiKey        = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0'; // Your API key hear
 $request->isLive        = false;
 $request->notifyUrl     = 'http://35.204.43.65/demoV2/example/ipn.php';
 $request->redirectUrl   = null;

@@ -341,7 +341,7 @@ $prices = array_column($products, 'pPrice');
     <hr class="mb-4">
     <div id="message" style="display: none">
       <div id="message-success" class="alert alert-success" role="alert" style="display: none">
-        <h4 class="alert-heading">Well done!</h4>
+        <h4 class="alert-heading" id="alertTitle">Well done!</h4>
         <h6 id="msgTitle"></h6>
         <p id="resDetails"></p>
         <hr>
@@ -353,12 +353,6 @@ $prices = array_column($products, 'pPrice');
         <p><span id="warning-status-msg"></span> & <span id="warning-type-code"></span>.</p>
         <hr>
         <p class="mb-0" id="warning-full-msg"></p>
-      </div>
-      <div id="message-info" class="alert alert-info" role="alert" style="display: none">
-        <h4 class="alert-heading">Good to know!</h4>
-        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
-        <hr>
-        <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
       </div>
     </div>
   </div>

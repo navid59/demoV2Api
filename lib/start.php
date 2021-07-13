@@ -68,7 +68,7 @@ class Start {
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,
-                            'message' => "Your method of sending data are Not Allowed",
+                            'message' => "Your method of sending data are not Allowed",
                             'data'    => json_decode($result)
                         );
                     break;
