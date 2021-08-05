@@ -9,4 +9,5 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="theme/js/theme.js"></script>
     <script src="theme/js/custom.js"></script>

@@ -112,10 +112,11 @@
                         </div>
                         ';
                     break;
+                    case 5:
                     default:
                     echo '
-                        <div class="alert alert-indo" role="alert">
-                            There is an issue with the payment
+                        <div class="alert alert-info" role="alert">
+                            There is an issue with your request - verify the status
                         </div>
                         ';
                 }

@@ -54,7 +54,7 @@ class VerifyAuth extends Request {
                         $arr = array(
                             'status'  => 1,
                             'code'    => $http_code,
-                            'message' => "You send your request, successfully to /payment/card/verify-auth",
+                            'message' => "Successfully verify authentication ",
                             'data'    => json_decode($result)
                         );
                         break;
