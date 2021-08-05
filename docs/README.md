@@ -3,8 +3,8 @@
 The NETOPIA PHP library provides easy access to the NETOPIA Payments API from
 applications written in the PHP language.
 
-## Requirements
-PHP 5.7.0 and later.
+## Compatible
+PHP 5.7.x - 8.0.x
 
 ## Installation 
 * #### By composer

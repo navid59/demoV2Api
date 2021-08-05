@@ -95,35 +95,4 @@ class Start {
             $finalResult = json_encode($arr, JSON_FORCE_OBJECT);
             return $finalResult;
         }
-
-    /**
-     * Set the setting in json file
-     */
-    // public function setSetting() {
-    //     $fileTmpKey = 'certificates/setting.json';
-    //     try {
-    //         $keyArr = array(
-    //             // 'activeKey' => $this->posSignature,
-    //             // 'keySet'    => $this->posSignatureSet,
-    //             // 'isLive'    => $this->isLive,
-    //             // 'hashMethod'=> $this->hashMethod,
-    //             // 'alg'       => $this->alg
-    //         );
-
-    //         file_put_contents($fileTmpKey, json_encode($keyArr));
-    //         return true;
-    //     } catch (\Throwable $th) {
-    //         //throw $th;
-    //         return false;
-    //     }
-    // }
-
-    /**
-     * get setting value from json file
-     */
-    // public function getSetting() {
-    //     $jsonSetting = file_get_contents('certificates/setting.json');
-    //     $arrSetting  = json_decode($jsonSetting, true);
-    //     return($arrSetting);
-    // }
 }

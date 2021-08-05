@@ -27,20 +27,5 @@ class Authorize extends Start{
             throw new \Exception('Bank Url is not defined for authorizing');
             exit;
         }
-
-        $this->bankUrl = $this->validateBankUrl($this->bankUrl);
-        
-    }
-
-    /**
-    * to Verify bank URL
-    * if is content "localhost" will replace with defulte Sandbox url
-    * localhost:8080 / localhost:8088 
-    */
-    public function validateBankUrl($bankUrl) {
-        if (strpos($bankUrl, 'localhost') !== false) {
-            return ("https://secure.sandbox.netopia-payments.com/sandbox/authorize");
-        }
-        return $bankUrl;
     }
 }

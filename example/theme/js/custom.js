@@ -57,10 +57,10 @@ $(function () {
             $('#conclusionMsg').append('<li>You will be redirecting to Bank Page</li>');
             
             /**
-             * Step 2) Sandbox/Auth
-             * preparing for redirect
+             * Step 2) 
+             * Redirect to bank for Auth
              */
-            doRedirectSandboxAuthorize(response.data.customerAction.formData.paReq); 
+            buildFormRedirecAuthorize(response.data); 
 
           } else if(response.data.error.code == 56) {
             $('#alertTitle').html("Duplicate Order");
@@ -112,15 +112,31 @@ $(function () {
   });
 });
 
+
 /**
- * Checkout page is redirecting to doAuth for card with 3DS
- * @param  paReq
- * @return
- * */ 
-function doRedirectSandboxAuthorize(paReq) {
-  var url = "doAuth.php?paReq="+paReq;
-  window.location.href = url;
-  return true;
+ * To create a form and send data to Bank for Authorize
+ */
+function buildFormRedirecAuthorize(response) {
+
+  // Create a form synamically
+  var form = document.createElement("form");
+  form.setAttribute("method", "post");
+  form.setAttribute("action", response.customerAction.url);
+  form.setAttribute("id", "authForm");
+  form.setAttribute("enctype", "multipart/form-data");
+
+
+  for (const [key, value] of Object.entries(response.customerAction.formData)) {
+    console.log(`${key}: ${value}`);
+    var FN = document.createElement("input");
+    FN.setAttribute("type", "text");
+    FN.setAttribute("name", key);
+    FN.setAttribute("value", value);
+    form.appendChild(FN);
+  }
+
+document.getElementsByTagName("body")[0].appendChild(form);
+document.getElementById('authForm').submit();
 }
 
 // Display Logs Real Time
