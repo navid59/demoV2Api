@@ -68,7 +68,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-4 mb-3">
           <label for="currency">Currency</label>
           <select class="custom-select d-block w-100" id="currency" name="currency" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option value="RON" selected>RON</option>
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>
@@ -80,7 +80,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-4 mb-3">
           <label for="emailTemplate">email Template</label>
           <select class="custom-select d-block w-100" id="emailTemplate" name="emailTemplate" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option value="confirm" selected>Confirm</option>
             <option value="1">Template #1</option>
             <option value="2">Template #2</option>
@@ -92,7 +92,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-4 mb-3">
           <label for="language">Language</label>
           <select class="custom-select d-block w-100" id="language" name="language" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option value="RO" selected>Romanian</option>
             <option value="EN">English</option>
           </select>
@@ -153,7 +153,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-3 mb-3">
           <label for="country">Country</label>
           <select class="custom-select d-block w-100" id="billingCountry" name="billingCountry" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option value="Romania" selected>Romania</option>
           </select>
           <div class="invalid-feedback">
@@ -163,7 +163,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-3 mb-3">
           <label for="billingCity">City</label>
           <select class="custom-select d-block w-100" id="billingCity" name="billingCity" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option value="Bucuresti" selected>Bucuresti</option>
           </select>
           <div class="invalid-feedback">
@@ -173,7 +173,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-3 mb-3">
           <label for="state">State</label>
           <select class="custom-select d-block w-100" id="billingState" name="billingState" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option value="Bucuresti" selected>Bucuresti</option>
             <option value="Ilfov">Ilfov</option>
           </select>
@@ -243,7 +243,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-3 mb-3">
           <label for="country">Country</label>
           <select class="custom-select d-block w-100" id="shippingCountry" name="shippingCountry" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option Value="Romania" selected>Romania</option>
           </select>
           <div class="invalid-feedback">
@@ -253,7 +253,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-3 mb-3">
           <label for="shippingCity">City</label>
           <select class="custom-select d-block w-100" id="shippingCity" name="shippingCity" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option value="Bucuresti" selected>Bucuresti</option>
           </select>
           <div class="invalid-feedback">
@@ -263,7 +263,7 @@ $prices = array_column($products, 'pPrice');
         <div class="col-md-3 mb-3">
           <label for="state">State</label>
           <select class="custom-select d-block w-100" id="shippingState" name="shippingState" required>
-            <option value="">Choose...</option>
+            <option value="">Chose...</option>
             <option value="Bucuresti" selected>Bucuresti</option>
             <option value="Ilfov">Ilfov</option>
           </select>

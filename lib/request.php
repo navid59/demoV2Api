@@ -20,7 +20,8 @@ class Request extends Start {
         return $config;
     }
 
-    public function setPayment($cardData) {
+    public function setPayment($cardData, $threeDSecusreData) {
+        $threeDSecusreData = json_decode($threeDSecusreData);
         $payment = array(
             'options' => [
                 'installments' => (int) 1,
@@ -34,8 +35,11 @@ class Request extends Start {
                 'secretCode'    => (string) $cardData['secretCode'],
                 'token'         => null
             ],
-            'data' => null
+            'data' => [
+                '3DS'            => (string) json_encode($threeDSecusreData)
+            ]
         );
+
         return $payment;
     }
 
@@ -88,10 +92,10 @@ class Request extends Start {
      * Set the request to payment
      * @output json
      */
-    public function setRequest($configData, $cardData, $orderData) {
+    public function setRequest($configData, $cardData, $orderData, $threeDSecusreData = null) {
         $startArr = array(
           'config'  => $this->setConfig($configData),
-          'payment' => $this->setPayment($cardData),
+          'payment' => $this->setPayment($cardData, $threeDSecusreData),
           'order'   => $this->setOrder($orderData)
       );
       

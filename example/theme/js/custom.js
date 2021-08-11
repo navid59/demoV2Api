@@ -1,5 +1,16 @@
 $(function () {
   $('#checkoutForm').on('submit', function (e) {
+  /**
+  * add new element to the checkout from
+  * Put Browser client info 
+  */  
+  var FN = document.createElement("input");
+      FN.setAttribute("type", "hidden");
+      FN.setAttribute("name", 'clientInfo');
+      FN.setAttribute("id", '3DS');
+  $('form').append(FN);
+  $('#3DS').val(sendClientBrowserInfo());
+  
     // $('form')[0].reset(); // to Clean values by duble click
   e.preventDefault();
   $.ajax({

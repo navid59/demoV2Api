@@ -10,4 +10,5 @@
     <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="theme/js/theme.js"></script>
+    <script src="theme/js/3DS.js"></script>
     <script src="theme/js/custom.js"></script>

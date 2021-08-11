@@ -34,8 +34,10 @@ $request->redirectUrl   = 'http://35.204.43.65/demoV2/example/backUrl.php';     
     'expMonth'      => $_POST['expMonth'],
     'expYear'       => $_POST['expYear'],
     'secretCode'    => $_POST['secretCode']
- ];
+ ]; 
 
+ /** - 3DS section  */
+ $threeDSecusreData =  $_POST['clientInfo']; 
 
  /** - Order section  */
 $orderData = new \StdClass();
@@ -72,7 +74,7 @@ $orderData->products                = setProducts($_POST['products']);
 /**
  * Assign values and generate Json
  */
-$request->jsonRequest = $request->setRequest($configData, $cardData, $orderData);
+$request->jsonRequest = $request->setRequest($configData, $cardData, $orderData, $threeDSecusreData);
 
 /**
  * Send Json to Start action 

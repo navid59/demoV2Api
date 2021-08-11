@@ -21,6 +21,10 @@ PHP 5.7.x - 8.0.x
 <https://secure.sandbox.netopia-payments.com/>
 
 
+### API Specification
+<https://secure.sandbox.netopia-payments.com/spec>
+
+
 ### API Actions
 * #### **1) Start the transaction**
         
@@ -37,86 +41,105 @@ PHP 5.7.x - 8.0.x
 
         ```
 
-            {
-                "config": {
-                    "emailTemplate": "confirm",
-                    "notifyUrl": "http://yourdomain.com/ipn.php", // Your IPN URL
-                    "redirectUrl": "",
-                    "language": "RO"
+        {
+            "config": {
+                "emailTemplate": "confirm",
+                "notifyUrl": "http://yourdomain.com/ipn.php",
+                "redirectUrl": "",
+                "language": "RO"
+            },
+            "payment": {
+                "options": {
+                "installments": 1,
+                "bonus": 0
                 },
-                "payment": {
-                    "options": {
-                    "installments": 1,
-                    "bonus": 0
-                    },
-                    "instrument": {
-                    "type": "card",
-                    "account": "9900990099009900",
-                    "expMonth": 1,
-                    "expYear": 2024,
-                    "secretCode": "111",
-                    "token": null
-                    },
-                    "data": null
+                "instrument": {
+                "type": "card",
+                "account": "9988997799669955",
+                "expMonth": 1,
+                "expYear": 2024,
+                "secretCode": "111",
+                "token": null
                 },
-                "order": {
-                    "ntpID": null,
-                    "posSignature": "XXXX-XXXX-XXXX-XXXX-XXXX",
-                    "dateTime": "YYYY-MM-DDT00:00:00Z",
-                    "description": "Your payment description",
-                    "orderID": "YOUR-UNIQUE-ORDER_ID",
-                    "amount": 20,                                   // Total amount
-                    "currency": "RON",
-                    "billing": {
-                    "email": "user@example.com",
-                    "phone": "string",
-                    "firstName": "string",
-                    "lastName": "string",
-                    "city": "string",
-                    "country": "string",
-                    "state": "string",
-                    "postalCode": "string",
-                    "details": "string"
+                "data": {
+                    "3DS": {
+                        "BROWSER_USER_AGENT": "string",
+                        "OS": "string",
+                        "OS_VERSION": "string",
+                        "MOBILE": "string",
+                        "SCREEN_POINT": "string",
+                        "SCREEN_PRINT": "string",
+                        "BROWSER_COLOR_DEPTH": "string",
+                        "BROWSER_SCREEN_HEIGHT": "string",
+                        "BROWSER_SCREEN_WIDTH": "string",
+                        "BROWSER_PLUGINS": "string",
+                        "BROWSER_JAVA_ENABLED": "string",
+                        "BROWSER_LANGUAGE": "string",
+                        "BROWSER_TZ": "string",
+                        "BROWSER_TZ_OFFSET": "string",
+                        "IP_ADDRESS": "string"
                     },
-                    "shipping": {
-                    "email": "user@example.com",
-                    "phone": "string",
-                    "firstName": "string",
-                    "lastName": "string",
-                    "city": "string",
-                    "country": "string",
-                    "state": "string",
-                    "postalCode": "string",
-                    "details": "string"
-                    },
-                    "products": [
-                    {
-                        "name": "Tshirt01",
-                        "code": "string123",
-                        "category": "fashion",
-                        "price": 10,
-                        "vat": 0
-                    },
-                    {
-                        "name": "Tshirt02",
-                        "code": "string123",
-                        "category": "fashion",
-                        "price": 10,
-                        "vat": 0
-                    }
-                    ],
-                    "installments": {
-                    "selected": 0,
-                    "available": [
-                        0
-                    ]
-                    },
-                    "payload": {
-                    "property1": "string",
                     "property2": "string"
-                    }
+                }
+            },
+            "order": {
+                "ntpID": null,
+                "posSignature": "XXXX-XXXX-XXXX-XXXX-XXXX",
+                "dateTime": "YYYY-MM-DDT00:00:00Z",
+                "description": "Your payment description",
+                "orderID": "YOUR-UNIQUE-ORDER_ID",
+                "amount": 20,
+                "currency": "RON",
+                "billing": {
+                "email": "user@example.com",
+                "phone": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "city": "string",
+                "country": "string",
+                "state": "string",
+                "postalCode": "string",
+                "details": "string"
+                },
+                "shipping": {
+                "email": "user@example.com",
+                "phone": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "city": "string",
+                "country": "string",
+                "state": "string",
+                "postalCode": "string",
+                "details": "string"
+                },
+                "products": [
+                {
+                    "name": "Tshirt01",
+                    "code": "string123",
+                    "category": "fashion",
+                    "price": 10,
+                    "vat": 0
+                },
+                {
+                    "name": "Tshirt02",
+                    "code": "string123",
+                    "category": "fashion",
+                    "price": 10,
+                    "vat": 0
+                }
+                ],
+                "installments": {
+                "selected": 0,
+                "available": [
+                    0
+                ]
+                },
+                "payload": {
+                "property1": "string",
+                "property2": "string"
                 }
             }
+        }
 
         ```
 
@@ -300,7 +323,16 @@ The bank will returen a token called **paRes**
 
     Regarding the **error code** & the **status** you will be able to manage the messages & the actions on your Site / App after the success or failed payments in 3DS
 
+#### What is 3DS
+3DS is a security protocol used to authenticate users / card holders.
+*   #### What kind of data need to be collected for 3DS 
+    To have benefit of 3DS need to be collected some simple data of the User's device, what they used it to make the payments 
 
+    Like : 
+        OS name, OS version, IP, ...
+        
+    In above **simple Json**, you have a list of them (payment -> data -> 3DS) 
+    Feel free to use <a href="#">**/example/theme/js/3DS.js**</a> if you need it.
 ##### Resources
 ###### ( <a href="https://github.com/mobilpay" target="_blank">GitHub repository</a> )
 ###### ( <a href="https://documenter.postman.com/preview/4914690-b18061f3-e352-4d30-a4f5-1195dcfc40e7?environment=&versionTag=latest&apiName=CURRENT&version=latest&documentationLayout=classic-double-column&right-sidebar=303030&top-bar=FFFFFF&highlight=EF5B25" target="_blank">see API examples in different programming languages</a> )
