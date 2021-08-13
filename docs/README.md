@@ -219,7 +219,9 @@ PHP 5.7.x - 8.0.x
         
     #### **Status** codes
 
-    * **15** : card need to be authorize
+    * **15** : need authorize
+    * **3** : is paid
+    * **5** : is confirmed
 
 
 <hr>

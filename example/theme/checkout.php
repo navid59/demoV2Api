@@ -355,5 +355,47 @@ $prices = array_column($products, 'pPrice');
         <p class="mb-0" id="warning-full-msg"></p>
       </div>
     </div>
+    <!-- <hr class="mb-4"> -->
+    <div id="paymentResult" style="display: none">
+        <div class="card">
+          <div class="alert alert-success" role="alert">
+            <span id="paymentTitle"> - </span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              Total amount : <span id="paymentAmount"></span>
+              <small class="text-muted"><span id="paymentCurrency"></span></small>
+            </h5>
+            <div class="card border-dark mb-3">
+              <div class="card-header">Other Info</div>
+              <div class="card-body text-dark">
+                <h5 class="card-title"><b>ntpID :</b><span id="ntpID"></span></h5>
+                <h5 class="card-title"><b>Token :</b></h5>
+                <p class="card-text" id="token"></p>
+              </div>
+            </div>
+          </div>
+          <div class="row card-body">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Another demo payment</h5>
+                  <p class="card-text">to do more test click the following button and try new payment in Demo mode.</p>
+                  <a href="<?=getenv('PROJECT_SERVER_ADDRESS').getenv('PROJECT_BASE_ROOT')?>" class="btn btn-primary stretched-link">continue shopping</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Status check</h5>
+                  <p class="card-text">click the following button and see the latest status of the payment.</p>
+                  <a href="<?=getenv('PROJECT_SERVER_ADDRESS').getenv('PROJECT_BASE_ROOT').getenv('PROJECT_STATUS_CHECK_PAGE'); ?>" class="btn btn-primary">Check status</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
 </div>

@@ -29,7 +29,7 @@ $(function () {
           $('#msgTitle').html("Data Sent");
           
           console.log("Error Code : "+response.data.error.code);  // Console Log
-
+          
           if(response.data.error.code == 100 & response.data.payment.status == 15) {
             $('#conclusionMsg').append('<li>Your card have 3DS</li>');
             $('#conclusionMsg').append('<li>You will be redirecting to Bank Page</li>');
@@ -39,6 +39,14 @@ $(function () {
              * Redirect to bank for Auth
              */
             buildFormRedirecAuthorize(response.data); 
+          } else if (response.data.error.code == 0) {
+            /**
+             * For non 3DS card
+             */
+             $('#authenticationToken').val(response.data.customerAction.authenticationToken);
+             $('#conclusionMsg').append('<li>Your card dosn\'t have 3DS!!!</li>');
+             $('#conclusionMsg').append('<li>Payment procces countinuing for non 3DS card</li>');
+             buildFormRedirecBackURL(response.data);
 
           } else if(response.data.error.code == 56) {
             $('#alertTitle').html("Duplicate Order");
@@ -60,8 +68,8 @@ $(function () {
             $('#conclusionMsg').append('<li>Transaction not allowed</li>');
             $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
           }else {
-            $('#authenticationToken').val(response.data.customerAction.authenticationToken);
-            $('#conclusionMsg').append('<li>Your card dosn\'t have 3DS!!!</li>');
+            $('#alertTitle').html("Info");
+            $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
           }
         }else{
           $('#message-success').hide();
@@ -96,7 +104,7 @@ $(function () {
  */
 function buildFormRedirecAuthorize(response) {
 
-  // Create a form synamically
+  // Create a form Dynamically
   var formUniqueID = "authForm"+Math.floor(Math.random() * 1000);
   var form = document.createElement("form");
   
@@ -118,3 +126,19 @@ function buildFormRedirecAuthorize(response) {
 document.getElementsByTagName("body")[0].appendChild(form);
 document.getElementById(formUniqueID).submit();
 }
+
+/**
+ * Redirect backUrl for non 3DS 
+ */
+ function buildFormRedirecBackURL(response) {
+
+  $('#doPayment').prop('disabled', true);
+  $('#paymentTitle').html('Congratulations, you successfully paid');
+
+  document.getElementById("paymentResult").style.display = "block";
+  $('#paymentAmount').html(response.payment.amount);
+  $('#paymentCurrency').html(response.payment.currency);
+  $('#ntpID').html(response.payment.ntpID);
+  $('#token').html(response.payment.token);
+
+ }

@@ -93,6 +93,8 @@ echo $startResult;
  *  - set 'authenticationToken' , 'ntpID' & 'authorizeUrl' in session
  */
 $resultObj = json_decode($startResult);
+// print_r($resultObj);
+
 if($resultObj->status){
     switch ($resultObj->data->error->code) {
         case 100:
@@ -105,6 +107,14 @@ if($resultObj->status){
 
             $_SESSION['authenticationToken'] = $resultObj->data->customerAction->authenticationToken;
             $_SESSION['ntpID'] = $resultObj->data->payment->ntpID;
+        break;
+        case 0:
+            /**
+             * Card has no 3DS
+             */
+            $_SESSION['ntpID']   = $resultObj->data->payment->ntpID;
+            $_SESSION['token']   = $resultObj->data->payment->token;
+            $_SESSION['orderID'] = $orderData->orderID;
         break;
         case 56:
             /**
@@ -130,11 +140,6 @@ if($resultObj->status){
         break;
         case 34:
             // Card Tranzactie nepermisa Error
-        break;
-        case 0:
-            /**
-             * Card has no 3DS
-             */
         break;
         default:
             //
