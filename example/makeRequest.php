@@ -70,7 +70,7 @@ $orderData->shipping->postalCode    = $_POST['shippingZip'];
 $orderData->shipping->details       = isset($_POST['details']) ?  $_POST['details'] : "Fara Detalie";
 
 $orderData->products                = setProducts($_POST['products']);
- 
+
 /**
  * Assign values and generate Json
  */

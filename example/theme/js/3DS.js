@@ -102,8 +102,7 @@ function sendClientBrowserInfo() {
         BROWSER_JAVA_ENABLED: client.isJava(),
         BROWSER_LANGUAGE: client.getLanguage(),
         BROWSER_TZ: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        BROWSER_TZ_OFFSET: new Date().getTimezoneOffset(),
-        IP_ADDRESS: null
+        BROWSER_TZ_OFFSET: new Date().getTimezoneOffset()
     };
 
     var threeDSInfo = JSON.stringify(info, null, 2);    

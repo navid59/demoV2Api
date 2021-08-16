@@ -22,6 +22,8 @@ class Request extends Start {
 
     public function setPayment($cardData, $threeDSecusreData) {
         $threeDSecusreData = json_decode($threeDSecusreData);
+        $threeDSecusreData->IP_ADDRESS = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "127.0.0.1";
+        
         $payment = array(
             'options' => [
                 'installments' => (int) 1,
