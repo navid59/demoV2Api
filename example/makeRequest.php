@@ -9,8 +9,8 @@ include_once('classes/log.php');
 include_once('../lib/request.php');
 
 $request = new Request();
-$request->posSignature  = 'LXTP-3WDM-WVXL-GC8B-Y5DA';                                 // Your signiture ID hear
-$request->apiKey        = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0'; // Your API key hear
+$request->posSignature  = 'XXXX-XXXX-XXXX-XXXX-XXXX';                                 // Your signiture ID hear
+$request->apiKey        = 'ApiKey_GENERATE-YOUR-KEY-FROM-MobilPay-AND-USE-IT-HEAR'; // Your API key hear // Valid Api cod Oct-2021
 $request->isLive        = false;
 $request->notifyUrl     = 'http://35.204.43.65/demoV2/example/ipn.php';               // Your IPN URL
 $request->redirectUrl   = 'http://35.204.43.65/demoV2/example/backUrl.php';           // Your backURL

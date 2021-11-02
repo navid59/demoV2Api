@@ -154,7 +154,7 @@ $prices = array_column($products, 'pPrice');
           <label for="country">Country</label>
           <select class="custom-select d-block w-100" id="billingCountry" name="billingCountry" required>
             <option value="">Chose...</option>
-            <option value="Romania" selected>Romania</option>
+            <option value="642" selected>Romania</option>
           </select>
           <div class="invalid-feedback">
             Please select a valid country.
@@ -244,7 +244,7 @@ $prices = array_column($products, 'pPrice');
           <label for="country">Country</label>
           <select class="custom-select d-block w-100" id="shippingCountry" name="shippingCountry" required>
             <option value="">Chose...</option>
-            <option Value="Romania" selected>Romania</option>
+            <option Value="642" selected>Romania</option>
           </select>
           <div class="invalid-feedback">
             Please select a valid country.

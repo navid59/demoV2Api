@@ -37,11 +37,8 @@ class Request extends Start {
                 'secretCode'    => (string) $cardData['secretCode'],
                 'token'         => null
             ],
-            'data' => [
-                '3DS'            => (string) json_encode($threeDSecusreData)
-            ]
+            'data' =>  $threeDSecusreData
         );
-
         return $payment;
     }
 
@@ -63,7 +60,7 @@ class Request extends Start {
                 'firstName'     => (string) $orderData->billing->firstName,
                 'lastName'      => (string) $orderData->billing->lastName,
                 'city'          => (string) $orderData->billing->city,
-                'country'       => (string) $orderData->billing->country,
+                'country'       => (int)    $orderData->billing->country,
                 'state'         => (string) $orderData->billing->state,
                 'postalCode'    => (string) $orderData->billing->postalCode,
                 'details'       => (string) $orderData->billing->details
@@ -74,17 +71,17 @@ class Request extends Start {
                 'firstName'     => (string) $orderData->shipping->firstName,
                 'lastName'      => (String) $orderData->shipping->lastName,
                 'city'          => (string) $orderData->shipping->city,
-                'country'       => (string) $orderData->shipping->country,
+                'country'       => (int)    $orderData->shipping->country,
                 'state'         => (string) $orderData->shipping->state,
                 'postalCode'    => (string) $orderData->shipping->postalCode,
                 'details'       => (string) $orderData->shipping->details
             ],
             'products' => $orderData->products,
             'installments'  => array(
-                                    'selected'  => (int) 0,
+                                    'selected'  => (int) 1,
                                     'available' => [(int) 0]
                             ),
-            'payload'       => null
+            'data'       => null
         );
         return $order;
     }

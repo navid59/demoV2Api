@@ -19,22 +19,26 @@ class Start {
                 exit;
             }
 
-            $url = $this->isLive ? 'https://secure.netopia-payments.com/payment/card/start' : 'https://secure.sandbox.netopia-payments.com/payment/card/start';
+            $url = $this->isLive ? 'https://secure.mobilpay.ro/pay/payment/card/start' : 'https://secure.sandbox.netopia-payments.com/payment/card/start';
             $ch = curl_init($url);
             
+            $headers  = [
+                'Authorization: '.$this->apiKey,
+                'Content-Type: application/json'
+            ];
+
             $payload = $jsonStr; // json DATA
-      
-      
+            
             // Attach encoded JSON string to the POST fields
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-      
-            // Set the content type to application/json
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type : application/json'));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization : '.$this->apiKey));
+                  
       
             // Return response instead of outputting
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      
+            
+            // Set the content type to application/json
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
             // Execute the POST request
             $result = curl_exec($ch);
             
@@ -61,6 +65,14 @@ class Start {
                             'status'  => 0,
                             'code'    => $http_code,
                             'message' => "You send Bad Request",
+                            'data'    => json_decode($result)
+                        );
+                    break;
+                    case 401:  # Authorization required
+                        $arr = array(
+                            'status'  => 0,
+                            'code'    => $http_code,
+                            'message' => "Authorization required",
                             'data'    => json_decode($result)
                         );
                     break;

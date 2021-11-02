@@ -36,7 +36,7 @@ if(count($_SESSION) == 0 || !isset($_SESSION)) {
  * you have the "authenticationToken","ntpID" from response of start action 
  */
 $verifyAuth = new VerifyAuth();
-$verifyAuth->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';
+$verifyAuth->apiKey              = 'ApiKey_GENERATE-YOUR-KEY-FROM-MobilPay-AND-USE-IT-HEAR'; // Valid Api cod - Oct 2021
 $verifyAuth->authenticationToken = $_SESSION['authenticationToken'];
 $verifyAuth->ntpID               = $_SESSION['ntpID'];
 $verifyAuth->paRes               = $_POST['paRes'];

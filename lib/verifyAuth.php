@@ -1,5 +1,4 @@
 <?php
-include_once('classes/log.php');
 include_once('../lib/request.php');
 
 
@@ -23,34 +22,32 @@ class VerifyAuth extends Request {
 
     // Send request to /payment/card/verify-auth
     public function sendRequestVerifyAuth($jsonStr) {  
-        $url = $this->isLive ? 'https://secure.netopia-payments.com/payment/card/verify-auth' : 'https://secure.sandbox.netopia-payments.com/payment/card/verify-auth';
+        $url = $this->isLive ? 'https://secure.mobilpay.ro/pay/payment/card/verify-auth' : 'https://secure.sandbox.netopia-payments.com/payment/card/verify-auth';
         $ch = curl_init($url);
     
+        $headers  = [
+            'Authorization: '.$this->apiKey,
+            'Content-Type: application/json'
+        ];
+
         $payload = $jsonStr; // json DATA
     
         // Attach encoded JSON string to the POST fields
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-    
-        // Set the content type to application/json
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type : application/json'));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Authorization : $this->apiKey"));
-    
+        
         // Return response instead of outputting
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
+
+        // Set the content type to application/json
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
         // Execute the POST request
         $result = curl_exec($ch);
-        //   die(print_r($result));
+        
         if (!curl_errno($ch)) {
                 switch ($http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE)) {
-                    case 200:  # OK
-                        $setRealTimeLog = 
-                        [
-                            "Code" =>  200,
-                            "Message" => "Request sent successfully for /payment/card/verify-auth."
-                        ];
-                        log::setLog(200, null ,$setRealTimeLog);    
-    
+                    case 200:  # OK  
                         $arr = array(
                             'status'  => 1,
                             'code'    => $http_code,
@@ -59,13 +56,6 @@ class VerifyAuth extends Request {
                         );
                         break;
                     case 404:  # Not Found
-                        $setRealTimeLog = 
-                        [
-                            "Code" =>  404,
-                            "Message" => "You send request to wrong URL."
-                        ];
-                        log::setLog(404, null ,$setRealTimeLog);    
-                        
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,
@@ -74,16 +64,18 @@ class VerifyAuth extends Request {
                         );
                         break;
                     case 400:  # Bad Request
-                        $setRealTimeLog = 
-                        [
-                            "Code" =>  400,
-                            "Message" => "You send Bad Request to verify-auth."
-                        ];
-                        log::setLog(404, null ,$setRealTimeLog);
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,
                             'message' => "You send Bad Request to verify-auth",
+                            'data'    => json_decode($result)
+                        );
+                        break;
+                    case 401:  # Authorization required
+                        $arr = array(
+                            'status'  => 0,
+                            'code'    => $http_code,
+                            'message' => "You send without authorization",
                             'data'    => json_decode($result)
                         );
                         break;
@@ -96,11 +88,6 @@ class VerifyAuth extends Request {
                         );
                         break;
                     default:
-                        $setRealTimeLog = 
-                        [
-                            "Message" => "Opps! Something is wrong, can not send data to verify-auth."
-                        ];
-                        log::setLog("xx", null ,$setRealTimeLog);
                         $arr = array(
                             'status'  => 0,
                             'code'    => $http_code,

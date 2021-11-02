@@ -92,17 +92,17 @@ function sendClientBrowserInfo() {
         OS_VERSION: client.getOSVersion(),
         DEVICE: client.getDevice(),
         DEVICE_TYPE: client.getDeviceType(),
-        MOBILE: client.isMobile(),
+        MOBILE: client.isMobile().toString(),
         SCREEN_POINT: "false",
         SCREEN_PRINT: client.getScreenPrint(),
-        BROWSER_COLOR_DEPTH: client.getColorDepth(),
+        BROWSER_COLOR_DEPTH: client.getColorDepth().toString(),
         BROWSER_SCREEN_HEIGHT: screen && screen[1] ? screen[1] : 0,
         BROWSER_SCREEN_WIDTH: screen && screen[0] ? screen[0] : 0,
         BROWSER_PLUGINS: client.getPlugins(),
-        BROWSER_JAVA_ENABLED: client.isJava(),
+        BROWSER_JAVA_ENABLED: client.isJava().toString(),
         BROWSER_LANGUAGE: client.getLanguage(),
         BROWSER_TZ: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        BROWSER_TZ_OFFSET: new Date().getTimezoneOffset()
+        BROWSER_TZ_OFFSET: new Date().getTimezoneOffset().toString()
     };
 
     var threeDSInfo = JSON.stringify(info, null, 2);    

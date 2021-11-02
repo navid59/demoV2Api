@@ -84,7 +84,7 @@ $(function () {
           $('#warning-status-msg').html('Your request is failed');
           $('#warning-type-code').html('the type of your error is :'+response.code);
           if (response.data !== undefined) {
-            $('#warning-full-msg').html(response.data.message);
+            $('#warning-full-msg').html(response.message);
           }
           $('#message-warning').show();
         }
