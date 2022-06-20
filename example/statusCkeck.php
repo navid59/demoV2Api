@@ -36,8 +36,8 @@ if(count($_SESSION) == 0 || !isset($_SESSION)) {
  * the "apiKey","isLive", "posSignature" can be set statically or read from DB, File, ...
  */
 $statusPayment = new Status();
-$statusPayment->apiKey              = 'ApiKey_GENERATE-YOUR-KEY-FROM-MobilPay-AND-USE-IT-HEAR';
-$statusPayment->posSignature        = 'XXXX-XXXX-XXXX-XXXX-XXXX';                              
+$statusPayment->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0'; // Valid Api code Oct-2021
+$statusPayment->posSignature        = 'LXTP-3WDM-WVXL-GC8B-Y5DA';                                 // Your signiture ID hear
 $statusPayment->ntpID               = $_SESSION['ntpID'];
 $statusPayment->orderID             = $_SESSION['orderID'];
 $statusPayment->isLive              = false;

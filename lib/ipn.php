@@ -165,12 +165,12 @@ class IPN extends Request{
              * check active posSignature 
              * check if is in set of signature too
              */
-            if(empty($objJwt->aud) || $objJwt->aud != $this->activeKey){
-                throw new \Exception('IDS_Service_IpnController__INVALID_SIGNATURE');
+            if(empty($objJwt->aud) || current($objJwt->aud) != $this->activeKey){
+                throw new \Exception('IDS_Service_IpnController__INVALID_SIGNATURE'.print_r($objJwt->aud, true).'__'.$this->activeKey);
                 exit;
             }
         
-            if(!in_array($objJwt->aud, $this->posSignatureSet,true)) {
+            if(!in_array(current($objJwt->aud), $this->posSignatureSet,true)) {
                 throw new \Exception('IDS_Service_IpnController__INVALID_SIGNATURE_SET');
                 exit;
             }
@@ -195,7 +195,7 @@ class IPN extends Request{
         
             if(strcmp($payloadHash, $objJwt->sub) != 0)
                 {
-                throw new \Exception('IDS_Service_IpnController__E_VERIFICATION_FAILED_TAINTED_PAYLOAD', E_VERIFICATION_FAILED_TAINTED_PAYLOAD);
+                throw new \Exception('IDS_Service_IpnController__E_VERIFICATION_FAILED_TAINTED_PAYLOAD');
                 print_r($payloadHash); // Temporay for Debuging
                 exit;
                 }
@@ -207,7 +207,7 @@ class IPN extends Request{
                 }
             catch(\Exception $e)
                 {
-                throw new \Exception('IDS_Service_IpnController__E_VERIFICATION_FAILED_PAYLOAD_FORMAT', E_VERIFICATION_FAILED_PAYLOAD_FORMAT);
+                throw new \Exception('IDS_Service_IpnController__E_VERIFICATION_FAILED_PAYLOAD_FORMAT');
                 }
             
             switch($objIpn->payment->status)

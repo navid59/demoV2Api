@@ -62,24 +62,21 @@ PHP 5.7.x - 8.0.x
                 "token": null
                 },
                 "data": {
-                    "3DS": {
-                        "BROWSER_USER_AGENT": "string",
-                        "OS": "string",
-                        "OS_VERSION": "string",
-                        "MOBILE": "string",
-                        "SCREEN_POINT": "string",
-                        "SCREEN_PRINT": "string",
-                        "BROWSER_COLOR_DEPTH": "string",
-                        "BROWSER_SCREEN_HEIGHT": "string",
-                        "BROWSER_SCREEN_WIDTH": "string",
-                        "BROWSER_PLUGINS": "string",
-                        "BROWSER_JAVA_ENABLED": "string",
-                        "BROWSER_LANGUAGE": "string",
-                        "BROWSER_TZ": "string",
-                        "BROWSER_TZ_OFFSET": "string",
-                        "IP_ADDRESS": "string"
-                    },
-                    "property2": "string"
+                    "BROWSER_USER_AGENT": "string",
+                    "OS": "string",
+                    "OS_VERSION": "string",
+                    "MOBILE": "string",
+                    "SCREEN_POINT": "string",
+                    "SCREEN_PRINT": "string",
+                    "BROWSER_COLOR_DEPTH": "string",
+                    "BROWSER_SCREEN_HEIGHT": "string",
+                    "BROWSER_SCREEN_WIDTH": "string",
+                    "BROWSER_PLUGINS": "string",
+                    "BROWSER_JAVA_ENABLED": "string",
+                    "BROWSER_LANGUAGE": "string",
+                    "BROWSER_TZ": "string",
+                    "BROWSER_TZ_OFFSET": "string",
+                    "IP_ADDRESS": "string"
                 }
             },
             "order": {
@@ -91,26 +88,26 @@ PHP 5.7.x - 8.0.x
                 "amount": 20,
                 "currency": "RON",
                 "billing": {
-                "email": "user@example.com",
-                "phone": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "city": "string",
-                "country": "string",
-                "state": "string",
-                "postalCode": "string",
-                "details": "string"
+                    "email": "user@example.com",
+                    "phone": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "city": "string",
+                    "country": 642,
+                    "state": "string",
+                    "postalCode": "string",
+                    "details": "string"
                 },
                 "shipping": {
-                "email": "user@example.com",
-                "phone": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "city": "string",
-                "country": "string",
-                "state": "string",
-                "postalCode": "string",
-                "details": "string"
+                    "email": "user@example.com",
+                    "phone": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "city": "string",
+                    "country": 642,
+                    "state": "string",
+                    "postalCode": "string",
+                    "details": "string"
                 },
                 "products": [
                 {
@@ -134,7 +131,7 @@ PHP 5.7.x - 8.0.x
                     0
                 ]
                 },
-                "payload": {
+            "data": {
                 "property1": "string",
                 "property2": "string"
                 }
